@@ -13,12 +13,12 @@ function handleClientLoad(){
 }
 
 function initClient(){
-    gapi.client.init({
+    window.gapi.client.init({
         discoveryDocs:DISCOVERY_DOCS,
         clientId:CLIENT_ID,
         scope:SCOPES
     }).then(()=>{
-        gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+        window.gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
         updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
         authorizeButton.onclick=handleAuthClick;
         signoutButton.onclick=handleSignouClick;
@@ -57,3 +57,17 @@ function getchannel(channel){
     })
     .catch(err => alert('NO channel by that name'));
 }
+
+
+
+// window.gapi.load('client:auth2', () => {
+//     window.gapi.client.init({
+//         clientId: '716075642837-kergfh0638hu8iq5dimpgnlc1f08s61r.apps.googleusercontent.com',
+//         scope: 'email',
+//         **plugin_name: 'streamy'**
+//     }).then(() => {
+//         this.auth = window.gapi.auth2.getAuthInstance();
+//         this.setState({isSignedIn: this.auth.isSignedIn.get()})
+//     });
+// });
+// }```
