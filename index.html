@@ -30,7 +30,7 @@
   // Make sure the client is loaded and sign-in is complete before calling this method.
   function execute() {
     return gapi.client.youtube.channels.list({
-      "part": ["snippet,contentDetails,statistics"],
+      "part": ["snippet,statistics"],
       "mine": true
     })
     .then(function(response) {
@@ -54,7 +54,12 @@
 </html>
 
 <!-- 
-UC_x5XG1OV2P6uZZ5FSM9Ttw -->
+UC_x5XG1OV2P6uZZ5FSM9Ttw 
+ "part": ["snippet,contentDetails,statistics"],
+-->
+
+
+
 
 
 
