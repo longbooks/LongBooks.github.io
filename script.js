@@ -18,14 +18,14 @@ function initClient(){
         clientId:CLIENT_ID,
         scope:SCOPES
     }).then(()=>{
-        gapi.auth2.getAuthInstance.isSignedIn.listen(updateSigninStatus);
+        gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
         updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
         authorizeButton.onclick=handleAuthClick;
         signoutButton.onclick=handleSignouClick;
     });
 }
 
-function updateSigninStatus(){
+function updateSigninStatus(isSignedIn){
     if(isSignedIn){
         authorizeButton.style.display='none';
         signoutButton.style.display='block';
@@ -47,7 +47,8 @@ function handleSignouClick(){
 }
 
 function getchannel(channel){
-    gapi.client.youtube.channels.list({
+    gapi.client.youtube.channels
+    .list({
         part : 'snippet,contentDetails,statistics',
         forUsername:channel
     })
