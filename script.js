@@ -1,5 +1,5 @@
 const CLIENT_ID = '1005661807012-3crllm5h5d33s61spu5m4b3fv9t513dh.apps.googleusercontent.com';
-const DISCOVERY_DOCS = 'https://docs.googleapis.com/$discovery/rest?version=v1';
+const DISCOVERY_DOCS = ['https://docs.googleapis.com/$discovery/rest?version=v1'];
 const SCOPES = 'https://www.googleapis.com/auth/documents.readonly';
 
 const authorizeButton=document.getElementById('enter-button');
