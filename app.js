@@ -24,11 +24,11 @@
     function handleAuthResult(authResult){
         if(authResult){
             $('.pre-auth').hide();
-            $('past-auth').show();
+            $('post-auth').show();
             loadAPI();
         }else{
             $('.pre-auth').show();
-            $('past-auth').hide();
+            $('post-auth').hide();
             $('#login-link').click(function(){
                 gapi.auth.authorize({
                     client_id: OAUTH_CLIENT_ID,
@@ -60,7 +60,7 @@
             displayMessage(response.error.message);
         }else{
             CHANNELID=response.items[0].id;
-            displaychannelid();
+            displaychannelid(CHANNELID);
         }
     });
  }
@@ -70,5 +70,7 @@
  }
 
 })();
+
+
 
 
