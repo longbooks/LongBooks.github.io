@@ -57,7 +57,7 @@
     });
     request.execute(function(response){
         if('error' in response){
-            displayMessage(response.error.message);
+             console.log(response);
         }else{
             CHANNELID=response.items[0].id;
             displaychannelid(CHANNELID);
