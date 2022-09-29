@@ -30,8 +30,8 @@
   // Make sure the client is loaded and sign-in is complete before calling this method.
   function execute() {
     return gapi.client.youtube.channels.list({
-      "part": ['snippet,statistics'],
-      "mine": "<code>true</code>"
+      "mine": true,
+      "part": ['snippet,statistics']
     })
     .then(function(response) {
     // Handle the results here (response.result has the parsed body).
