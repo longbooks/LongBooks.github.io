@@ -21,7 +21,7 @@ function initClient(){
         scope:SCOPES
     }).then(() => {
         // listen for sing state changes
-        gapi.auth2.getAuthInstance().isSignedIn.liste(updateSignStatus);
+        gapi.auth2.getAuthInstance().isSignedIn.listen(updateSignStatus);
         // handle initial sign in state
         updateSignStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
         authorizeButton.onclick=handleAuthClick;
