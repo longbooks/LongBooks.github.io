@@ -16,7 +16,7 @@ function handelClientLoad(){
 // init api client library and setr up sing in listeners
 function initClient(){
     gapi.client.init({
-        dicoveryDocs:DISCOVERY_DOCS,
+        discoveryDocs:DISCOVERY_DOCS,
         clientId:CLIENT_ID,
         scope:SCOPES
     }).then(() => {
@@ -35,7 +35,7 @@ function updateSignStatus(isSignedIn){
         authorizeButton.style.display='none';
         signoutButton.style.display='block';
         content.style.display='block';
-        getchannel();
+        getchannel(defaultchannel);
     }else{
         authorizeButton.style.display='block';
         signoutButton.style.display='none';
@@ -45,12 +45,12 @@ function updateSignStatus(isSignedIn){
 
 // handle login
 function handleAuthClick(){
-    gapi.auth2.getAuthInstance.signIn();
+    gapi.auth2.getAuthInstance().signIn();
 }
 
 // handle logout
 function handleAuthClick(){
-    gapi.auth2.getAuthInstance.signOut();
+    gapi.auth2.getAuthInstance().signOut();
 }
 
 // get channel from api
@@ -58,7 +58,7 @@ function getchannel(channel){
     gapi.client.youtube.channels
     .list({
         part:'snippet,contentDetails,statistics',
-        forUser:channel
+        forUsername:channel
     })
     .then(response => {
         console.log(response);
