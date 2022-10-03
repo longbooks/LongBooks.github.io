@@ -1,6 +1,6 @@
-let CLIENT_ID='753974637646-7met11ffa1ru608a6saauqgcpf451dhq.apps.googleusercontent.com';
-let DISCOVERY_DOCS=["https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest"];
-let SCOPES='https://www.googleapis.com/auth/youtube.readonly';
+let CLIENT_ID = '753974637646-7met11ffa1ru608a6saauqgcpf451dhq.apps.googleusercontent.com';
+let DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest"];
+let SCOPES = 'https://www.googleapis.com/auth/youtube.readonly';
 
 let authorizeButton=document.getElementById('enter-button');
 let signoutButton=document.getElementById('exit-button');
@@ -13,7 +13,7 @@ function handelClientLoad(){
     gapi.load('client:auth2',initClient);
 }
 
-// init api client library and setr up sing in listeners
+// init api client library and set up sing in listeners
 function initClient(){
     gapi.client.init({
         discoveryDocs:DISCOVERY_DOCS,
@@ -49,7 +49,7 @@ function handleAuthClick(){
 }
 
 // handle logout
-function handleAuthClick(){
+function handleSignouClick(){
     gapi.auth2.getAuthInstance().signOut();
 }
 
