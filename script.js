@@ -16,7 +16,7 @@ function handleClientLoad(){
 
 // Init API client library and set up sing in listeners
 function initClient(){
-	gapi.client.init({
+	window.gapi.client.init({
 		discoveryDocs: DISCOVERY_DOCS,
 		clientId: CLIENT_ID,
 		scope: SCOPES
