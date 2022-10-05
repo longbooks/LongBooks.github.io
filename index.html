@@ -7,6 +7,7 @@
 </head>    
 
 <body>
+  <!-- <script src="https://apis.google.com/js/api.js"></script> -->
   <script src="https://accounts.google.com/gsi/client"></script>
 <script>
   /**
@@ -37,22 +38,10 @@
   }
   // Make sure the client is loaded and sign-in is complete before calling this method.
   function executes() {
-    // var requests=gapi.client.youtube.channels.list({'part':'snippet','mine':'true'});
-    // requests.execute(function(response){
-    //   console.log(response);
-    // });
-
-    var requests=gapi.client.request({
-      'method': 'GET',
-      'path': '/youtube/v3/channels',
-      'params': {'part':'snippet','mine':'true'}
-    });
-
+    var requests=gapi.client.youtube.channels.list({'part':'snippet','mine':'true'});
     requests.execute(function(response){
       console.log(response);
-      console.log(response.json());
     });
-
 
   //   return window.gapi.client.youtube.channels.list({
   //     "part": ['snippet,statistics'],
@@ -84,7 +73,6 @@ UC_x5XG1OV2P6uZZ5FSM9Ttw
 "part": ["snippet,contentDetails,statistics"],
 https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&mine=true&key=AIzaSyDh1x__6yEFiS9m3vdW4hOACvWjvSIKe8I
 -->
-
 
 
 
