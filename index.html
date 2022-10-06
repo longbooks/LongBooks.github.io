@@ -31,6 +31,7 @@
           console.error("Error loading GAPI client for API", err); 
         });
   }
+
   // Make sure the client is loaded and sign-in is complete before calling this method.
   function executes() {
     // var requests=gapi.client.youtube.channels.list({'part':'snippet','mine':'true'});
@@ -38,22 +39,40 @@
     //   console.log(response);
     // });
   
-    return gapi.client.youtube.channelSections.list({
-      "part": [
-        "snippet,contentDetails"
-      ],
-      "mine": true
-    })
-        .then(function(response) {
-                // Handle the results here (response.result has the parsed body).
-                console.log("Response", response);
-              },
-              function(err) { console.error("Execute error", err); });
+    // channelSectionsListMine: {
+    //       description: 'This example retrieves the channel sections shown on ' +
+    //           'the authorized user\'s channel. It uses the <code><a href="' +
+    //           '/youtube/v3/docs/channelSections/list#mine">mine</a></code> ' +
+    //           'request parameter to indicate that the API should return ' +
+    //           'channel sections on that channel.',
 
+    //       method: 'youtube.channelSections.list',
+    //       requestParameters: {
+    //         'mine': true,
+    //         'part': 'snippet,contentDetails'
+    //       },
+    //       scopes: ['https://www.googleapis.com/auth/youtube.readonly'],
+    //     },
+
+    return gapi.client.youtube.channelSections.list({
+      "requestParameters":{
+        'mine': true,
+        'part': 'snippet,contentDetails'
+      }
+    })
+    .then(function(response) {
+    // Handle the results here (response.result has the parsed body).
+    console.log("Response", response);
+    },
+    function(err) { 
+      console.error("Execute error", err); 
+    });
   }
+
   gapi.load("client:auth2", function() {
     gapi.auth2.init({client_id: "316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com"});
   });
+
 </script>
 
 <button onclick="authenticate().then(loadClient)">authorize and load</button>
