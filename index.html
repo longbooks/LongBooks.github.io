@@ -7,19 +7,17 @@
 </head>    
 
 <body>
-  <!-- <script src="https://apis.google.com/js/api.js"></script> -->
-  <script src="https://apis.google.com/js/client:plusone.js" type="application/javascipt"></script>
-
+  <script src="https://apis.google.com/js/api.js"></script>
 <script>
 
   function authenticate() {
-    return gapi.client.getAuthInstance()
+    return gapi.auth2.getAuthInstance()
         .signIn({scope: "https://www.googleapis.com/auth/youtube.readonly"})
         .then(function() { 
           console.log("Sign-in successful"); 
         },
        function(err) { 
-        console.error("Error signing in", err); 
+        console.error("Error signing in", err.result.error.message); 
       });
   }
   function loadClient() {
@@ -29,17 +27,17 @@
           console.log("GAPI client loaded for API");
          },
         function(err) { 
-          console.error("Error loading GAPI client for API", err); 
+          console.error("Error loading GAPI client for API", err.result.error.message); 
         });
   }
   // Make sure the client is loaded and sign-in is complete before calling this method.
   function executes() {
     var requests=gapi.client.youtube.channels.list({'part':'snippet','mine':'true'});
     requests.execute(function(response){
-      console.log(response);
+      console.log(response.result);
     });
   }
-  gapi.client("client:auth2", function() {
+  gapi.load("client:auth2", function() {
     gapi.auth2.init({client_id: "316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com"});
   });
 </script>
@@ -56,11 +54,5 @@ UC_x5XG1OV2P6uZZ5FSM9Ttw
 "part": ["snippet,contentDetails,statistics"],
 https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&mine=true&key=AIzaSyDh1x__6yEFiS9m3vdW4hOACvWjvSIKe8I
 -->
-
-
-
-
-
-
 
 
