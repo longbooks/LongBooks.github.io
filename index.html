@@ -15,7 +15,7 @@
     <script type="text/javascript">
       function authenticate(){
         return gapi.auth2.getAuthInstance()
-            .signIn()
+            .signIn({scope: "https://www.googleapis.com/auth/youtube.readonly"})
             .then(function(){ 
               console.log("Sign-in successful"); 
             },
@@ -40,9 +40,9 @@
         //   console.log(response);
         // });
     
-        return gapi.client.youtube.channelSections.list({
+        return gapi.client.youtube.channels.list({
            'mine': true,
-           'part': 'snippet,contentDetails'
+           'part': 'snippet,contentDetails,statistics'
         })
         .then(function(response) {
         console.log("Response", response);
@@ -64,7 +64,4 @@
 </body>
 
 </html>
-
-
-<!-- {scope: "https://www.googleapis.com/auth/youtube.readonly"} -->
 
