@@ -39,10 +39,10 @@
     // });
   
     return gapi.client.youtube.channelSections.list({
-      "mine": true,
       "part": [
         "snippet,contentDetails"
-      ] 
+      ],
+      "mine": true
     })
         .then(function(response) {
                 // Handle the results here (response.result has the parsed body).
