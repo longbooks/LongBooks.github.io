@@ -7,10 +7,13 @@
 </head>    
 
 <body>
-  <script src="https://apis.google.com/js/api.js"></script>
+  <!-- <script src="https://apis.google.com/js/api.js"></script> -->
+  <script src="https://apis.google.com/js/client:plusone.js" type="application/javascipt"></script>
+
 <script>
+
   function authenticate() {
-    return gapi.auth2.getAuthInstance()
+    return gapi.client.getAuthInstance()
         .signIn({scope: "https://www.googleapis.com/auth/youtube.readonly"})
         .then(function() { 
           console.log("Sign-in successful"); 
@@ -36,8 +39,7 @@
       console.log(response);
     });
   }
-
-  gapi.load("client:auth2", function() {
+  gapi.client("client:auth2", function() {
     gapi.auth2.init({client_id: "316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com"});
   });
 </script>
@@ -54,6 +56,8 @@ UC_x5XG1OV2P6uZZ5FSM9Ttw
 "part": ["snippet,contentDetails,statistics"],
 https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&mine=true&key=AIzaSyDh1x__6yEFiS9m3vdW4hOACvWjvSIKe8I
 -->
+
+
 
 
 
