@@ -11,10 +11,10 @@
   <script src="https://apis.google.com/js/api.js"></script>
 
 <script>
-  function authenticate() {
+  function authenticate(){
     return gapi.auth2.getAuthInstance()
-        .signIn({scope: "https://www.googleapis.com/auth/youtube.readonly"})
-        .then(function() { 
+        .signIn()
+        .then(function(){ 
           console.log("Sign-in successful"); 
         },
        function(err) { 
@@ -32,19 +32,19 @@
         });
   }
 
-  // Make sure the client is loaded and sign-in is complete before calling this method.
   function executes() {
     // var requests=gapi.client.youtube.channels.list({'part':'snippet','mine':'true'});
     // requests.execute(function(response){
     //   console.log(response);
     // });
-  
+
     return gapi.client.youtube.channelSections.list({
-       'mine': true,
-       'part': 'snippet,contentDetails'
+      "requestParameters":{
+        'mine': true,
+        'part': 'snippet,contentDetails'
+      }
     })
     .then(function(response) {
-    // Handle the results here (response.result has the parsed body).
     console.log("Response", response);
     },
     function(err) { 
@@ -65,10 +65,6 @@
 
 </html>
 
-<!-- 
-UC_x5XG1OV2P6uZZ5FSM9Ttw 
-"part": ["snippet,contentDetails,statistics"],
-https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&mine=true&key=AIzaSyDh1x__6yEFiS9m3vdW4hOACvWjvSIKe8I
--->
 
+<!-- {scope: "https://www.googleapis.com/auth/youtube.readonly"} -->
 
