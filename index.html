@@ -39,10 +39,8 @@
     // });
 
     return gapi.client.youtube.channelSections.list({
-      "requestParameters":{
-        'mine': true,
-        'part': 'snippet,contentDetails'
-      }
+       'mine': true,
+       'part': 'snippet,contentDetails'
     })
     .then(function(response) {
     console.log("Response", response);
