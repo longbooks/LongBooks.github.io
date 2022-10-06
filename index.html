@@ -2,59 +2,62 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="google-signnin-client_id" content="316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Youtube my data Clone</title>
+
+    <script src="https://apis.google.com/js/api.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+      function authenticate(){
+        return gapi.auth2.getAuthInstance()
+            .signIn()
+            .then(function(){ 
+              console.log("Sign-in successful"); 
+            },
+           function(err) { 
+            console.error("Error signing in", err); 
+          });
+      }
+      function loadClient() {
+        gapi.client.setApiKey("AIzaSyDh1x__6yEFiS9m3vdW4hOACvWjvSIKe8I");
+        return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
+            .then(function() { 
+              console.log("GAPI client loaded for API");
+             },
+            function(err) { 
+              console.error("Error loading GAPI client for API", err); 
+            });
+      }
+    
+      function executes() {
+        // var requests=gapi.client.youtube.channels.list({'part':'snippet','mine':'true'});
+        // requests.execute(function(response){
+        //   console.log(response);
+        // });
+    
+        return gapi.client.youtube.channelSections.list({
+           'mine': true,
+           'part': 'snippet,contentDetails'
+        })
+        .then(function(response) {
+        console.log("Response", response);
+        },
+        function(err) { 
+          console.error("Execute error", err); 
+        });
+      }
+    
+      gapi.load("client:auth2", function() {
+        gapi.auth2.init({client_id: "316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com"});
+      });
+    
+    </script>
 </head>    
 
 <body>
 
-  <script src="https://apis.google.com/js/api.js"></script>
 
-<script>
-  function authenticate(){
-    return gapi.auth2.getAuthInstance()
-        .signIn()
-        .then(function(){ 
-          console.log("Sign-in successful"); 
-        },
-       function(err) { 
-        console.error("Error signing in", err); 
-      });
-  }
-  function loadClient() {
-    gapi.client.setApiKey("AIzaSyDh1x__6yEFiS9m3vdW4hOACvWjvSIKe8I");
-    return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
-        .then(function() { 
-          console.log("GAPI client loaded for API");
-         },
-        function(err) { 
-          console.error("Error loading GAPI client for API", err); 
-        });
-  }
-
-  function executes() {
-    // var requests=gapi.client.youtube.channels.list({'part':'snippet','mine':'true'});
-    // requests.execute(function(response){
-    //   console.log(response);
-    // });
-
-    return gapi.client.youtube.channelSections.list({
-       'mine': true,
-       'part': 'snippet,contentDetails'
-    })
-    .then(function(response) {
-    console.log("Response", response);
-    },
-    function(err) { 
-      console.error("Execute error", err); 
-    });
-  }
-
-  gapi.load("client:auth2", function() {
-    gapi.auth2.init({client_id: "316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com"});
-  });
-
-</script>
 
 <button onclick="authenticate().then(loadClient)">authorize and load</button>
 <button onclick="executes()">execute</button>
