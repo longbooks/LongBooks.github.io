@@ -108,15 +108,24 @@
        * https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
        */
       function listMajors() {
-        var requests=gapi.client.youtube.channels.list({'part':'snippet','mine':'true'});
-        requests.execute(function(response){
-         console.log(response);
-        }),
+        // var requests=gapi.client.youtube.channels.list({'part':'snippet','mine':'true'});
+        // requests.execute(function(response){
+        //  console.log(response);
+        // }),
+
+        return gapi.client.youtube.channels.list({
+            "part": [ "snippet,contentDetails,statistics"],
+            "mine": true
+        })
+        .then(function(response) {
+        // Handle the results here (response.result has the parsed body).
+        console.log("Response", response);
+        },
         function(response) {
           appendPre('Error: ' + response.result.error.message);
-        };
+        });
       }
-    listMajors();
+    listMajors()
     </script>
 
     <script async defer src="https://apis.google.com/js/api.js"
