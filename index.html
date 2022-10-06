@@ -33,10 +33,23 @@
   }
   // Make sure the client is loaded and sign-in is complete before calling this method.
   function executes() {
-    var requests=gapi.client.youtube.channels.list({'part':'snippet','mine':'true'});
-    requests.execute(function(response){
-      console.log(response);
-    });
+    // var requests=gapi.client.youtube.channels.list({'part':'snippet','mine':'true'});
+    // requests.execute(function(response){
+    //   console.log(response);
+    // });
+  
+    return gapi.client.youtube.channelSections.list({
+      "part": [
+        "snippet,contentDetails,statistics"
+      ],
+      "mine": true
+    })
+        .then(function(response) {
+                // Handle the results here (response.result has the parsed body).
+                console.log("Response", response);
+              },
+              function(err) { console.error("Execute error", err); });
+
   }
   gapi.load("client:auth2", function() {
     gapi.auth2.init({client_id: "316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com"});
