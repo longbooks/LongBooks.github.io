@@ -17,7 +17,7 @@
    */
 
   function authenticate() {
-    return window.gapi.client.getAuthInstance()
+    return gapi.client.getAuthInstance()
         .signIn({scope: "https://www.googleapis.com/auth/youtube.readonly"})
         .then(function() { 
           console.log("Sign-in successful"); 
@@ -27,8 +27,8 @@
       });
   }
   function loadClient() {
-    window.gapi.client.setApiKey("AIzaSyDh1x__6yEFiS9m3vdW4hOACvWjvSIKe8I");
-    return window.gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
+    gapi.client.setApiKey("AIzaSyDh1x__6yEFiS9m3vdW4hOACvWjvSIKe8I");
+    return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
         .then(function() { 
           console.log("GAPI client loaded for API");
          },
@@ -55,9 +55,10 @@
   //   function(err) { 
   //     console.error("Execute error", err); 
   //   });
+
   }
-  window.gapi.client("client:auth2", function() {
-    window.gapi.auth2.init({client_id: "316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com"});
+  gapi.client("client:auth2", function() {
+    gapi.auth2.init({client_id: "316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com"});
   });
 </script>
 
@@ -73,14 +74,5 @@ UC_x5XG1OV2P6uZZ5FSM9Ttw
 "part": ["snippet,contentDetails,statistics"],
 https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&mine=true&key=AIzaSyDh1x__6yEFiS9m3vdW4hOACvWjvSIKe8I
 -->
-
-
-
-
-
-
-
-
-
 
 
