@@ -17,7 +17,7 @@
           console.log("Sign-in successful"); 
         },
        function(err) { 
-        console.error("Error signing in", err.result.error.message); 
+        console.error("Error signing in", err.result); 
       });
   }
   function loadClient() {
@@ -27,7 +27,7 @@
           console.log("GAPI client loaded for API");
          },
         function(err) { 
-          console.error("Error loading GAPI client for API", err.result.error.message); 
+          console.error("Error loading GAPI client for API", err.result); 
         });
   }
   // Make sure the client is loaded and sign-in is complete before calling this method.
