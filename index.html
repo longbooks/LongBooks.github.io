@@ -5,8 +5,12 @@
     <meta name="google-signnin-client_id" content="316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Youtube my data Clone</title>
+</head>    
 
-    <script src="https://apis.google.com/js/api.js" type="text/javascript"></script>
+<body>
+
+  <!-- <script src="https://apis.google.com/js/api.js" type="text/javascript"></script> -->
+  <script src="https://apis.google.com/js/platform.js" type="text/javascript"></script>
 
     <script type="text/javascript">
       function authenticate(){
@@ -53,11 +57,6 @@
       });
     
     </script>
-</head>    
-
-<body>
-
-
 
 <button onclick="authenticate().then(loadClient)">authorize and load</button>
 <button onclick="executes()">execute</button>
