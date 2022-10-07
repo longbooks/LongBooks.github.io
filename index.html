@@ -26,24 +26,13 @@
       scope: "https://www.googleapis.com/auth/youtube.readonly"
     })
     .then(() => {
-      authorizeButton.then(loadClient).onclick = handleAuthClick;
+      authorizeButton.onclick = handleAuthClick;
       signoutButton.onclick = handleSignoutClick;
     });
   }
   
   function handleAuthClick() {
      gapi.auth2.getAuthInstance().signIn();
-
-     function loadClient() {
-        gapi.client.setApiKey("AIzaSyDh1x__6yEFiS9m3vdW4hOACvWjvSIKe8I");
-        return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
-            .then(function() { 
-              console.log("GAPI client loaded for API");
-             },
-            function(err) { 
-              console.error("Error loading GAPI client for API", err); 
-            });
-      }
   }
   
   function handleSignoutClick() {
