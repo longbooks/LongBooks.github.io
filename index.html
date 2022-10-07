@@ -26,8 +26,8 @@
       scope: "https://www.googleapis.com/auth/youtube.readonly"
     })
     .then(() => {
-      authorizeButton.onclick = handleAuthClick;
-      signoutButton.onclick = handleSignoutClick;
+      authorizeButton.onclick = handleAuthClick();
+      signoutButton.onclick = handleSignoutClick();
     });
   }
   
