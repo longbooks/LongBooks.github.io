@@ -13,7 +13,7 @@
 
   <script>
      function authenticate(){
-        return gapi.auth2.getAuthInstance()
+       gapi.auth2.getAuthInstance()
             .signIn({scope: "https://www.googleapis.com/auth/youtube.readonly"})
             .then(function(){ 
               console.log("Sign-in successful"); 
@@ -24,14 +24,14 @@
       }
       function loadClient() {
         gapi.client.setApiKey("AIzaSyDh1x__6yEFiS9m3vdW4hOACvWjvSIKe8I");
-        return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
-            .then(function() { 
-              console.log("GAPI client loaded for API");
-             },
-            function(err) { 
-              console.log("Error loading GAPI client for API", err); 
-            });
-      }
+        gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
+        .then(function() { 
+        console.log("GAPI client loaded for API");
+        },
+        function(err) { 
+         console.log("Error loading GAPI client for API", err); 
+      });
+    }
     
       function executes() {
         // var requests=gapi.client.youtube.channels.list({'part':'snippet','mine':'true'});
@@ -39,7 +39,7 @@
         //   console.log(response);
         // });
     
-        return gapi.client.youtube.channels.list({
+        gapi.client.youtube.channels.list({
            part: 'snippet,contentDetails,statistics',
            mine: true
         })
