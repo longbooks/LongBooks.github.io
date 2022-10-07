@@ -13,20 +13,21 @@
 
   <script>
   
-    function handleClientLoad() {
-        gapi.load('client:auth2', initClient);
-    }
+  //   function handleClientLoad() {
+  //       gapi.load('client:auth2', initClient);
+  //   }
 
-    function initClient(){
-      gapi.client.init({
-      clientId: "316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com",
-      scope: "https://www.googleapis.com/auth/youtube.readonly"
-    })
-  }
+  //   function initClient(){
+  //     gapi.client.init({
+  //     clientId: "316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com",
+  //     scope: "https://www.googleapis.com/auth/youtube.readonly"
+  //   })
+  // }
+
 
      function authenticate(){
        return gapi.auth2.getAuthInstance()
-            .signIn({scope: "https://www.googleapis.com/auth/youtube.readonly"})
+            .signIn()
             .then(function(){ 
               console.log("Sign-in successful"); 
             },
@@ -63,10 +64,13 @@
         });
       }
 
-    
-      // gapi.load("client:auth2", function() {
-      //   gapi.auth2.init({client_id: "316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com"});
-      // });
+      gapi.load("client:auth2", function() {
+        gapi.auth2.init({
+          client_id: "316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com",
+          scope: "https://www.googleapis.com/auth/youtube.readonly"
+        });
+      });
+      
   </script>
 
 <button onclick="authenticate().then(loadClient)">authorize and load</button>
