@@ -25,7 +25,7 @@
   }
 
      function authenticate(){
-       gapi.auth2.getAuthInstance()
+       return gapi.auth2.getAuthInstance()
             .signIn()
             .then(function(){ 
               console.log("Sign-in successful"); 
