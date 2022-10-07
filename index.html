@@ -8,34 +8,33 @@
 
 <body>
 
-  <!-- <script src="https://apis.google.com/js/api.js"></script> -->
-  <script src="https://apis.google.com/js/platform.js"></script>
+  <button id="authorizeButton">authorize and load</button>
+  <button id="signoutButton">execute</button>
 
   <script>
+
+    const authorizeButton = document.getElementById('authorizeButton');
+    const signoutButton = document.getElementById('signoutButton');
+
+    function handleClientLoad() {
+        gapi.load('client:auth2', initClient);
+    }
+
+    function initClient(){
+      gapi.client.init({
+      clientId: "316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com",
+      scope: "https://www.googleapis.com/auth/youtube.readonly"
+    })
+    .then(() => {
+      authorizeButton.then(loadClient).onclick = handleAuthClick;
+      signoutButton.onclick = handleSignoutClick;
+    });
+  }
   
-  //   function handleClientLoad() {
-  //       gapi.load('client:auth2', initClient);
-  //   }
+  function handleAuthClick() {
+     gapi.auth2.getAuthInstance().signIn();
 
-  //   function initClient(){
-  //     gapi.client.init({
-  //     clientId: "316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com",
-  //     scope: "https://www.googleapis.com/auth/youtube.readonly"
-  //   })
-  // }
-
-
-     function authenticate(){
-       return gapi.auth2.getAuthInstance()
-            .signIn()
-            .then(function(){ 
-              console.log("Sign-in successful"); 
-            },
-           function(err) { 
-            console.error("Error signing in", err); 
-          });
-      }
-      function loadClient() {
+     function loadClient() {
         gapi.client.setApiKey("AIzaSyDh1x__6yEFiS9m3vdW4hOACvWjvSIKe8I");
         return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
             .then(function() { 
@@ -45,58 +44,33 @@
               console.error("Error loading GAPI client for API", err); 
             });
       }
-    
-      function executes() {
+  }
+  
+  function handleSignoutClick() {
+       
         // var requests=gapi.client.youtube.channels.list({'part':'snippet','mine':'true'});
         // requests.execute(function(response){
         //   console.log(response);
         // });
     
-        return gapi.client.youtube.channels.list({
-           part: 'snippet,contentDetails,statistics',
-           mine: true,
-        })
-        .then(function(response) {
-        console.log("Response", response);
-        },
-        function(err) { 
-          console.error("Execute error", err); 
-        });
-      }
 
-      gapi.load("client:auth2", function() {
-        gapi.auth2.init({
-          client_id: "316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com",
-          scope: "https://www.googleapis.com/auth/youtube.readonly"
-        });
-      });
-      
-  </script>
+    return gapi.client.youtube.channels.list({
+      part: 'snippet,contentDetails,statistics',
+      mine: true,
+   })
+  .then(function(response) {
+    console.log("Response", response);
+  },
+  function(err) { 
+    console.error("Execute error", err); 
+  });
+}
 
-<button onclick="authenticate().then(loadClient)">authorize and load</button>
-<button onclick="executes()">execute</button>
+
+</script>
+
+<script async defer src="https://apis.google.com/js/api.js" onload="this.onload=function(){};handleClientLoad()" onreadystatechange="if (this.readyState === 'complete') this.onload()"></script>
 
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
