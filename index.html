@@ -13,25 +13,25 @@
 
   <script>
      function authenticate(){
-       gapi.auth2.getAuthInstance()
+        return gapi.auth2.getAuthInstance()
             .signIn({scope: "https://www.googleapis.com/auth/youtube.readonly"})
             .then(function(){ 
               console.log("Sign-in successful"); 
             },
            function(err) { 
-            console.log("Error signing in", err); 
+            console.error("Error signing in", err); 
           });
       }
       function loadClient() {
         gapi.client.setApiKey("AIzaSyDh1x__6yEFiS9m3vdW4hOACvWjvSIKe8I");
-        gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
-        .then(function() { 
-        console.log("GAPI client loaded for API");
-        },
-        function(err) { 
-         console.log("Error loading GAPI client for API", err); 
-      });
-    }
+        return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
+            .then(function() { 
+              console.log("GAPI client loaded for API");
+             },
+            function(err) { 
+              console.error("Error loading GAPI client for API", err); 
+            });
+      }
     
       function executes() {
         // var requests=gapi.client.youtube.channels.list({'part':'snippet','mine':'true'});
@@ -39,15 +39,15 @@
         //   console.log(response);
         // });
     
-        gapi.client.youtube.channels.list({
+        return gapi.client.youtube.channels.list({
            part: 'snippet,contentDetails,statistics',
-           mine: true
+           mine: true,
         })
         .then(function(response) {
         console.log("Response", response);
         },
         function(err) { 
-          console.log("Execute error", err); 
+          console.error("Execute error", err); 
         });
       }
     
