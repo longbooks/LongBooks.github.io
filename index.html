@@ -11,17 +11,17 @@
 <script>
   
   gapi.load("client:auth2", function() {
-    gapi.auth2.init({client_id: "316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com"});
+    gapi.auth2.init({clientId: "316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com"});
   });
 
   function authenticate() {
     return gapi.auth2.getAuthInstance()
-        .signIn({scopes: "https://www.googleapis.com/auth/youtube.readonly"})
+        .signIn({scope: "https://www.googleapis.com/auth/youtube.readonly"})
         .then(function() { 
           console.log("Sign-in successful");
          },
-        function(response) { 
-         console.log(response.error.message);
+        function(err) { 
+          console.error("Error signing in", err);
         });
   }
 
