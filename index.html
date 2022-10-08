@@ -10,23 +10,34 @@
 
     <script>
     
-        function authenticate() {
-            var discoveryUrl = 'https://www.googleapis.com/discovery/v1/apis/youtubeAnalytics/v1/rest';
-             gapi.client.init({
-                apiKey: 'AIzaSyDh1x__6yEFiS9m3vdW4hOACvWjvSIKe8I',
-                clientId: '316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com',
-                discoveryDocs: [discoveryUrl],
-                scope: 'https://www.googleapis.com/auth/yt-analytics.readonly'
-            }).then(function () {
-                return gapi.auth2.getAuthInstance().signIn()
-                .then(function() { 
-                    console.log("Sign-in successful");
-                    loadClient();
-                },
-                function(err) { 
-                     console.error("Error signing in", err);
-                });
+        // function authenticate() {
+        //     var discoveryUrl = 'https://www.googleapis.com/discovery/v1/apis/youtubeAnalytics/v1/rest';
+        //      gapi.client.init({
+        //         apiKey: 'AIzaSyDh1x__6yEFiS9m3vdW4hOACvWjvSIKe8I',
+        //         clientId: '316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com',
+        //         discoveryDocs: [discoveryUrl],
+        //         scope: 'https://www.googleapis.com/auth/yt-analytics.readonly'
+        //     }).then(function () {
+        //         return gapi.auth2.getAuthInstance().signIn()
+        //         .then(function() { 
+        //             console.log("Sign-in successful");
+        //             loadClient();
+        //         },
+        //         function(err) { 
+        //              console.error("Error signing in", err);
+        //         });
 
+        //     });
+        // }
+
+        function authenticate(){
+            return gapi.auth2.getAuthInstance()
+            .signIn({scope: "https://www.googleapis.com/auth/youtube.readonly"})
+            .then(function() { 
+                console.log("Sign-in successful");
+            },
+            function(err) { 
+                console.error("Error signing in", err);
             });
         }
 
@@ -46,5 +57,67 @@
 
     </script>
 
- <button onclick="authenticate().then(loadClient)">authorize and load</button>
+ <button onclick="authenticate()">authorize and load</button>
+ <button onclick="loadClient()">execute</button>
+</body><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Youtube my data Clone</title>
+</head>
+<body>
+    <script src="https://apis.google.com/js/api.js"></script>
+
+    <script>
+    
+        // function authenticate() {
+        //     var discoveryUrl = 'https://www.googleapis.com/discovery/v1/apis/youtubeAnalytics/v1/rest';
+        //      gapi.client.init({
+        //         apiKey: 'AIzaSyDh1x__6yEFiS9m3vdW4hOACvWjvSIKe8I',
+        //         clientId: '316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com',
+        //         discoveryDocs: [discoveryUrl],
+        //         scope: 'https://www.googleapis.com/auth/yt-analytics.readonly'
+        //     }).then(function () {
+        //         return gapi.auth2.getAuthInstance().signIn()
+        //         .then(function() { 
+        //             console.log("Sign-in successful");
+        //             loadClient();
+        //         },
+        //         function(err) { 
+        //              console.error("Error signing in", err);
+        //         });
+
+        //     });
+        // }
+
+        function authenticate(){
+            return gapi.auth2.getAuthInstance()
+            .signIn({scope: "https://www.googleapis.com/auth/youtube.readonly"})
+            .then(function() { 
+                console.log("Sign-in successful");
+            },
+            function(err) { 
+                console.error("Error signing in", err);
+            });
+        }
+
+        function loadClient() {
+            var request = gapi.client.youtube.channels.list({
+                part:'id,contentDetails',
+                mine: true
+            });
+            request.execute(function(response){
+                if('error' in response){
+                    console.log(response.error.message);
+                }else{
+                    console.log("Response", response);
+                }
+            })
+        }
+
+    </script>
+
+ <button onclick="authenticate()">authorize and load</button>
+ <button onclick="loadClient()">execute</button>
 </body>
