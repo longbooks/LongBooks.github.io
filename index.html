@@ -20,8 +20,8 @@
         .then(function() { 
           console.log("Sign-in successful");
          },
-        function(err) { 
-          console.error("Error signing in", err);
+        function(response) { 
+         console.log(response.error.message);
         });
   }
 
