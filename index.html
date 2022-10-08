@@ -7,7 +7,6 @@
 </head>    
 
 <body>
-
   <script src="https://apis.google.com/js/api.js"></script>
 <script>
   
@@ -17,13 +16,13 @@
 
   function authenticate() {
     return gapi.auth2.getAuthInstance()
-        .signIn({scope: "https://www.googleapis.com/auth/youtube.readonly"})
+        .signIn({scopes: "https://www.googleapis.com/auth/youtube.readonly"})
         .then(function() { 
           console.log("Sign-in successful");
          },
         function(err) { 
           console.error("Error signing in", err);
-         });
+        });
   }
 
   function loadClient() {
@@ -50,26 +49,13 @@
         console.log("Response", response);
       }
     })
-    
-    // .then(function(response) {
-    //             // Handle the results here (response.result has the parsed body).
-    //    console.log("Response", response);
-    // },
-    // function(err) { 
-    //   console.error("Execute error", err);
-    //  });
   }
-
-  
 
 </script>
 
 
 <button onclick="authenticate().then(loadClient)">authorize and load</button>
 <!-- <button onclick="execute()">execute</button> -->
-
-
-
 
 
 </body>
