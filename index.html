@@ -67,12 +67,17 @@
   // Make sure the client is loaded and sign-in is complete before calling this method.
   function channelsListMine(part,mine){
     var response=gapi.client.youtube.channels.list({part,'mine':mine});
-    fetch(response).then((responce)=>{
+    getdata(response);
+};
+
+function getdata(rel){
+    fetch(rel).then((responce)=>{
         return responce.json();
     }).then((data)=>{
         console.log(data);
     })
-  }
+  
+};
 
 </script>
 
