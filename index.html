@@ -66,23 +66,13 @@
   }
 
 
-  // Make sure the client is loaded and sign-in is complete before calling this method.
-//   function channelsListMine(part,mine){
-//     var response=gapi.client.youtube.channels.list({part,'mine':mine});
-//     getdata(response)
-// };
+  function channelsListMine(part,mine){
+    var response=gapi.client.youtube.channels.list(part,{'mine':mine});
+    getdata(response)
+};
 
-// function getdata(rel){
-//     fetch(rel).then((responce)=>{
-//         return responce.json();
-//     }).then((data)=>{
-//         console.log(data);
-//     })
-// };
-
-function getdata(){
-    var res=gapi.client.youtube.channels.list({part:'snippet,contentDetails,statistics','mine':true});
-    fetch(res).then((responce)=>{
+function getdata(rel){
+    fetch(rel).then((responce)=>{
         return responce.json();
     }).then((data)=>{
         try {
@@ -91,16 +81,16 @@ function getdata(){
         catch (error) {
           console.log('Error parsing JSON:', error, data);
         }
-      })
+   })
 };
 
-
+// var res=gapi.client.youtube.channels.list({part:'snippet,contentDetails,statistics','mine':true});
 
 </script>
 
 
 <button onclick="authenticate().then(loadClient)">authorize and load</button>
-<button onclick="getdata()">execute</button>
+<button onclick="channelsListMine('snippet,contentDetails,statistics',true)">execute</button>
 
 
 
