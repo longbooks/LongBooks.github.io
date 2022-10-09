@@ -64,26 +64,35 @@
           console.error("Error loading GAPI client for API", err); 
         });
   }
-  // Make sure the client is loaded and sign-in is complete before calling this method.
-  function channelsListMine(part,mine){
-    var response=gapi.client.youtube.channels.list({part,'mine':mine});
-    getdata(response);
-};
 
-function getdata(rel){
-    fetch(rel).then((responce)=>{
+
+  // Make sure the client is loaded and sign-in is complete before calling this method.
+//   function channelsListMine(part,mine){
+//     var response=gapi.client.youtube.channels.list({part,'mine':mine});
+// };
+
+// function getdata(rel){
+//     fetch(rel).then((responce)=>{
+//         return responce.json();
+//     }).then((data)=>{
+//         console.log(data);
+//     })
+// };
+
+function getdata(){
+  var response=gapi.client.youtube.channels.list({part:'snippet,contentDetails,statistics','mine':true});
+    fetch(response).then((responce)=>{
         return responce.json();
     }).then((data)=>{
         console.log(data);
     })
-  
 };
 
 </script>
 
 
 <button onclick="authenticate().then(loadClient)">authorize and load</button>
-<button onclick="channelsListMine('snippet,contentDetails,statistics', true)">execute</button>
+<button onclick="getdata()">execute</button>
 
 
 
