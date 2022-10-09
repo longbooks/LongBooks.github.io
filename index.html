@@ -70,17 +70,11 @@
     printResults(response);
   }
 
-  function main(){
-    channelsListMine('snippet,contentDetails,statistics', true);
-  }
-
-  main();
-
 </script>
 
 
 <button onclick="authenticate().then(loadClient)">authorize and load</button>
-<button onclick="channelsListMine()">execute</button>
+<button onclick="channelsListMine('snippet,contentDetails,statistics', true)">execute</button>
 
 
 
