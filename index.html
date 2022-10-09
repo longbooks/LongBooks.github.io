@@ -9,48 +9,57 @@
 <body>
   <script src="https://apis.google.com/js/api.js"></script>
 <script>
+  
+  gapi.load("client:auth2", function() {
+    gapi.auth2.init({client_id: "316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com"});
+  });
 
-    function authorize(){
-        gapi.load('client:auth2',authenticate)
-    }
-    
-    function authenticate() {
-        gapi.client.setApiKey("AIzaSyDh1x__6yEFiS9m3vdW4hOACvWjvSIKe8I");
-        gapi.auth2.init({
-            client_id: "316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com",
-            scope:'https://www.googleapis.com/auth/youtube.readonly'
-    }).then(function(authResult){
-        var ath=gapi.auth2.getAuthInstance();
-        ath.isSignedIn.listen(loadClient);
-        ath.signIn();
-    });
+  function authenticate() {
+    return gapi.auth2.getAuthInstance()
+        .signIn({scope: "https://www.googleapis.com/auth/youtube.readonly"})
+        .then(function() { 
+          console.log("Sign-in successful");
+         },
+        function(err) { 
+          console.error("Error signing in", err);
+        });
   }
 
   function loadClient() {
-    console.log("Sign-in successful");
-    authorize=true;
+    gapi.client.setApiKey("AIzaSyDh1x__6yEFiS9m3vdW4hOACvWjvSIKe8I");
+    return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
+        .then(function() { 
+          console.log("GAPI client loaded for API");
+          channelsListMine('snippet,contentDetails,statistic',true);
+         },
+        function(err) { 
+          console.error("Error loading GAPI client for API", err); 
+        });
   }
-
   // Make sure the client is loaded and sign-in is complete before calling this method.
-  function executebtn() {
-    var request = gapi.client.youtube.channels.list({
-      part:'id,contentDetails',
-      mine: true
-    });
-    request.execute(function(response){
-      if('error' in response){
-        console.log(response.error.message);
-      }else{
-        console.log("Response", response);
-      }
-    })
+  function channelsListMine(part,mine){
+    var response=YouTube.channels.list(part,{'mine':mine});
+    console.log(response);
   }
+  // function executebtn() {
+  //   var request = gapi.client.youtube.channels.list({
+  //     part:'id,contentDetails',
+  //     mine: true
+  //   });
+  //   request.execute(function(response){
+  //     if('error' in response){
+  //       console.log(response.error.message);
+  //     }else{
+  //       console.log("Response", response);
+  //     }
+  //   })
+  // }
 
 </script>
 
 
 <button onclick="authenticate().then(loadClient)">authorize and load</button>
-<button onclick="execute()">execute</button>
+<!-- <button onclick="execute()">execute</button> -->
 
 
 </body>
