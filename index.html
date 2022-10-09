@@ -59,7 +59,6 @@
     return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
         .then(function() { 
           console.log("GAPI client loaded for API");
-          channelsListMine('snippet,contentDetails,statistic',true);
          },
         function(err) { 
           console.error("Error loading GAPI client for API", err); 
@@ -70,25 +69,19 @@
     var response=gapi.client.youtube.channels.list(part,{'mine':mine});
     printResults(response);
   }
-  // function executebtn() {
-  //   var request = gapi.client.youtube.channels.list({
-  //     part:'id,contentDetails',
-  //     mine: true
-  //   });
-  //   request.execute(function(response){
-  //     if('error' in response){
-  //       console.log(response.error.message);
-  //     }else{
-  //       console.log("Response", response);
-  //     }
-  //   })
-  // }
+
+  function main(){
+    channelsListMine('snippet,contentDetails,statistics', true);
+  }
+
+  main();
 
 </script>
 
 
 <button onclick="authenticate().then(loadClient)">authorize and load</button>
-<!-- <button onclick="execute()">execute</button> -->
+<button onclick="channelsListMine()">execute</button>
+
 
 
 </body>
