@@ -14,6 +14,35 @@
     gapi.auth2.init({client_id: "316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com"});
   });
 
+//   function printResults(response) {
+//   var props = ['type', 'title', 'textDisplay', 'channelId', 'videoId', 'hl', 'gl', 'label'];
+//   for (var r = 0; r < response['items'].length; r++) {
+//     var item = response['items'][r];
+//     var itemId = '';
+//     var value;
+//     if (item['rating']) {
+//       itemId = item['id'];
+//       value = 'Rating: ' + item['rating'];
+//     } else {
+//       if (item['id']['videoId']) {
+//         itemId = item['id']['videoId'];
+//       } else if (item['id']['channelId']) {
+//         itemId = item['id']['channelId'];
+//       } else {
+//         itemId = item['id'];
+//       }
+      
+//       for (var p = 0; p < props.length; p++) {
+//         if (item['snippet'][props[p]]) {
+//           value = itemId + ': ' + item['snippet'][props[p]];
+//           break;
+//         }
+//       }
+//     }
+//     Logger.log(value);
+//   }
+// }
+
   function authenticate() {
     return gapi.auth2.getAuthInstance()
         .signIn({scope: "https://www.googleapis.com/auth/youtube.readonly"})
@@ -35,23 +64,34 @@
           console.error("Error loading GAPI client for API", err); 
         });
   }
-  // Make sure the client is loaded and sign-in is complete before calling this method.
-  function execute(part,mine) {
-    var request = gapi.client.youtube.channels.list(part,{'mine':mine});
-    request.execute(function(response){
-      if('error' in response){
-        console.log(response.error.message);
-      }else{
-        console.log("Response", response);
-      }
-    })
-  }
+
+
+  function channelsListMine(part,mine){
+    var response=gapi.client.youtube.channels.list(part,{'mine':mine});
+    getdata(response)
+};
+
+function getdata(rel){
+    fetch(rel).then((responce)=>{
+        return responce.json();
+    }).then((data)=>{
+        try {
+          console.log(JSON.parse(data));
+        }
+        catch (error) {
+          console.log('Error parsing JSON:', error, data);
+        }
+   })
+};
+
+// var res=gapi.client.youtube.channels.list({part:'snippet,contentDetails,statistics','mine':true});
 
 </script>
 
 
 <button onclick="authenticate().then(loadClient)">authorize and load</button>
-<button onclick="execute('snippet,contentDetails,statistics',true)">execute</button>
+<button onclick="channelsListMine('snippet,contentDetails,statistics',true)">execute</button>
+
 
 
 </body>
