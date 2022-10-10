@@ -55,14 +55,23 @@
         };
 
         function loadAPI(){
-            gapi.client.load('youtube','v3',function()
-                {
-                    gapi.client.load('youtubeAnalytics','v1',function()
-                    {
-                        getUserChannel('id,contentDetails',true);
-                    });
+            gapi.client.setApiKey("AIzaSyDh1x__6yEFiS9m3vdW4hOACvWjvSIKe8I");
+            return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
+            .then(function() { 
+                console.log("GAPI client loaded for API");
+                getUserChannel('id,contentDetails',true);
+            },
+            function(err) { 
+                console.error("Error loading GAPI client for API", err); 
+            });
+            // gapi.client.load('youtube','v3',function()
+            //     {
+            //         gapi.client.load('youtubeAnalytics','v1',function()
+            //         {
+            //             getUserChannel('id,contentDetails',true);
+            //         });
                    
-                });
+            //     });
         };
 
         function getUserChannel(part,mine){
