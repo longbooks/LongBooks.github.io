@@ -67,22 +67,29 @@
 
 
   function channelsListMine(part,mine){
-    var response=gapi.client.youtube.channels.list(part,{'mine':mine});
-    getdata(response)
+     return gapi.client.youtube.channels.list(part,{'mine':mine})
+    .then(function(response) {
+      console.log("Response", response);
+      // getdata(response);
+    },
+    function(err) { 
+    console.error("Execute error", err); 
+  });
+ 
 };
 
-function getdata(rel){
-    fetch(rel).then((responce)=>{
-        return responce.json();
-    }).then((data)=>{
-        try {
-          console.log(JSON.parse(data));
-        }
-        catch (error) {
-          console.log('Error parsing JSON:', error, data);
-        }
-   })
-};
+// function getdata(rel){
+//     fetch(rel).then((responce)=>{
+//         return responce.json();
+//     }).then((data)=>{
+//         try {
+//           console.log(JSON.parse(data));
+//         }
+//         catch (error) {
+//           console.log('Error parsing JSON:', error, data);
+//         }
+//    })
+// };
 
 // var res=gapi.client.youtube.channels.list({part:'snippet,contentDetails,statistics','mine':true});
 
@@ -92,25 +99,6 @@ function getdata(rel){
 <button onclick="authenticate().then(loadClient)">authorize and load</button>
 <button onclick="channelsListMine('snippet,contentDetails,statistics',true)">execute</button>
 
-
-
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
