@@ -67,7 +67,7 @@
 
 
   function channelsListMine(part,mine){
-     return gapi.client.youtube.channels.list(part,{'mine':mine})
+     var response= gapi.client.youtube.channels.list(part,{'mine':mine})
     .then(function(response) {
       console.log("Response", response);
       // getdata(response);
