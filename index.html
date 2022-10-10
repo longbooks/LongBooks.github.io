@@ -78,18 +78,18 @@
  
 };
 
-// function getdata(rel){
-//     fetch(rel).then((responce)=>{
-//         return responce.json();
-//     }).then((data)=>{
-//         try {
-//           console.log(JSON.parse(data));
-//         }
-//         catch (error) {
-//           console.log('Error parsing JSON:', error, data);
-//         }
-//    })
-// };
+function getdata(rel){
+    fetch(rel).then((responce)=>{
+        return responce.json();
+    }).then((data)=>{
+        try {
+          console.log(JSON.parse(data));
+        }
+        catch (error) {
+          console.log('Error parsing JSON:', error, data);
+        }
+   })
+};
 
 // var res=gapi.client.youtube.channels.list({part:'snippet,contentDetails,statistics','mine':true});
 
