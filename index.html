@@ -34,7 +34,7 @@ function loadClient() {
 
 function printResults(response) {
   var props = ['type', 'title', 'textDisplay', 'channelId', 'videoId', 'hl', 'gl', 'label'];
-  for (var r = 0; r < response['items'].length; r++) {
+  for (var r = 0; r < response['items'].Object.keys(response).length; r++) {
     var item = response['items'][r];
     var itemId = '';
     var value;
@@ -67,7 +67,7 @@ function channelsListMine(part,mine){
     console.log(response);
     var objectlength=Object.keys(response).length;
     console.log(objectlength);
-    printResults(objectlength);
+    printResults(response);
 };
 
 function main(){
