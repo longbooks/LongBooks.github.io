@@ -71,12 +71,12 @@ function main(){
 };
 
 function channelsListMine(mine){
-    var response=gapi.client.youtube.channels.list({
+   gapi.client.youtube.channels.list({
       part:'snippet,contentDetails,statistics',
       mine:mine
-    });   
-    console.log(response);
-    getdata(response);
+    }).then(res =>{
+      console.log(response);
+    })
 };
 
 function getdata(rel){
