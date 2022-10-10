@@ -10,10 +10,6 @@
   <script src="https://apis.google.com/js/api.js"></script>
 <script>
   
-  gapi.load("client:auth2", function() {
-    gapi.auth2.init({client_id: "316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com"});
-  });
-
 function authenticate() {
     return gapi.auth2.getAuthInstance()
     .signIn({scope: "https://www.googleapis.com/auth/youtube.readonly"})
@@ -38,8 +34,8 @@ function loadClient() {
 
 function printResults(response) {
   var props = ['type', 'title', 'textDisplay', 'channelId', 'videoId', 'hl', 'gl', 'label'];
-  for (var r = 0; r < response['items'].length; r++) {
-    var item = response['items'][r];
+  for (var r = 0; r < response['snippet'].length; r++) {
+    var item = response['snippet'][r];
     var itemId = '';
     var value;
     if (item['rating']) {
@@ -66,7 +62,8 @@ function printResults(response) {
 };
 
 function channelsListMine(part,mine){
-    var response=gapi.client.youtube.channels.list(part,{mine:mine});  
+    var response=gapi.client.youtube.channels.list(part,
+        {mine:mine});  
     console.log(response);
     printResults(response);
 };
@@ -74,6 +71,11 @@ function channelsListMine(part,mine){
 function main(){
   channelsListMine('snippet,contentDetails,statistics',true);
 };
+
+gapi.load("client:auth2", function() {
+    gapi.auth2.init({client_id: "316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com"});
+});
+
 
 </script>
 
