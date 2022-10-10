@@ -30,14 +30,13 @@ function loadClient() {
     return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
         .then(function() { 
           console.log("GAPI client loaded for API");
+          function main(){
+             channelsListMine('snippet,contentDetails,statistics',true);
+            };
          },
         function(err) { 
           console.error("Error loading GAPI client for API", err); 
         });
-};
-
-function main(){
-  channelsListMine('snippet,contentDetails,statistics',true);
 };
 
 function channelsListMine(part,mine){
