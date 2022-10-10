@@ -14,9 +14,9 @@
     gapi.auth2.init({client_id: "316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com"});
   });
 
-  function printResults(response) {
+function printResults(response) {
   var props = ['type', 'title', 'textDisplay', 'channelId', 'videoId', 'hl', 'gl', 'label'];
-  for (var r = 0; r < response['params'].length; r++) {
+  for (var r = 0; r < response['items'].length; r++) {
     var item = response['items'][r];
     var itemId = '';
     var value;
@@ -41,9 +41,9 @@
     }
     Logger.log(value);
   }
-}
+};
 
-  function authenticate() {
+function authenticate() {
     return gapi.auth2.getAuthInstance()
         .signIn({scope: "https://www.googleapis.com/auth/youtube.readonly"})
         .then(function() { 
@@ -52,9 +52,9 @@
         function(err) { 
           console.error("Error signing in", err);
         });
-  }
+};
 
-  function loadClient() {
+function loadClient() {
     gapi.client.setApiKey("AIzaSyDh1x__6yEFiS9m3vdW4hOACvWjvSIKe8I");
     return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
         .then(function() { 
@@ -63,10 +63,13 @@
         function(err) { 
           console.error("Error loading GAPI client for API", err); 
         });
-  }
+};
 
+function main(){
+  channelsListMine('snippet,contentDetails,statistics',true);
+};
 
-  function channelsListMine(part,mine){
+function channelsListMine(part,mine){
     var response= gapi.client.youtube.channels.list(part,{'mine':mine})
     console.log(response);
     printResults(response);
@@ -85,13 +88,13 @@ function getdata(rel){
    })
 };
 
-// var res=gapi.client.youtube.channels.list({part:'snippet,contentDetails,statistics','mine':true});
+
 
 </script>
 
 
 <button onclick="authenticate().then(loadClient)">authorize and load</button>
-<button onclick="channelsListMine('snippet,contentDetails,statistics',true)">execute</button>
+<button onclick="main()">execute</button>
 
 </body>
 
