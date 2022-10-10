@@ -40,6 +40,20 @@ function loadClient() {
 function channelsListMine(part,mine){
     var response=gapi.client.youtube.channels.list({part:part,mine:mine});   
     console.log(response);
+    getdata(response);
+};
+
+function getdata(rel){
+    fetch(rel).then((responce)=>{
+        return responce.json();
+    }).then((data)=>{
+        try {
+          console.log(JSON.parse(data));
+        }
+        catch (error) {
+          console.log('Error parsing JSON:', error);
+        }
+   })
 };
 
 </script>
