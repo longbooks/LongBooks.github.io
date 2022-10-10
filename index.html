@@ -22,12 +22,12 @@
     var channelID;
     
     window.onJSClientLoad=function(){
-        gapi.auth.init(function(){
+        gapi.auth2.init(function(){
             window.setTimeout(checkAuth,1);
         });};
         
         function checkAuth(){
-            gapi.auth.authorize({
+            gapi.auth2.authorize({
                 client_id:OAUTH_CLIENT_ID,
                 scope:OAUTH_SCOPES,
                 immediate:true
@@ -44,7 +44,7 @@
                 $('past-auth').hide();
                 $('#login-link').click(function()
                 {
-                    gapi.auth.authorize(
+                    gapi.auth2.authorize(
                     {
                         client_id:OAUTH_CLIENT_ID,
                         scope:OAUTH_SCOPES,
