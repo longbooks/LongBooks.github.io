@@ -67,12 +67,19 @@ function loadClient() {
 };
 
 function main(){
-  channelsListMine(true);
+  channelsListMine('snippet,contentDetails,statistics',true);
 };
 
-function channelsListMine(mine){
-   gapi.client.youtube.channels.list({
-      part:'snippet,contentDetails,statistics',
+function channelsListMine(part,mine){
+    // var response=gapi.client.youtube.channels.list({
+    //   part:'snippet,contentDetails,statistics',
+    //   mine:mine
+    // });   
+    // console.log(response);
+    // getdata(response);
+
+    gapi.client.youtube.channels.list({
+      part,
       mine:mine
     }).then(res =>{
       console.log(response);
