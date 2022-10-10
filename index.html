@@ -59,18 +59,19 @@
                 {
                     gapi.client.load('youtubeAnalytics','v1',function()
                     {
-                        getUserChannel();
+                        getUserChannel('id,contentDetails',true);
                     });
                    
                 });
         };
 
-        function getUserChannel(){
-            var request=gapi.client.youtube.channels.list(
-                {
-                    mine:true,
-                    part:'id,contentDetails'
-                });
+        function getUserChannel(part,mine){
+            // var request=gapi.client.youtube.channels.list(
+            //     {
+            //         mine:true,
+            //         part:'id,contentDetails'
+            //     });
+            var request=gapi.client.youtube.channels.list(part,{'mine':mine});
                 request.execute(function(response)
                 {
                     if('error' in response){
