@@ -2,79 +2,88 @@
 <html>
 <head>
     <title>YouTube Data API Quickstart</title>
-    <meta charset='utf-8' />
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="//ajax.google.com/jsapi"></script>
+    <script type="text/javascript" src="https://apis.google.com/js.client.js?onload=onJSClientLoad"></script>
 </head>
 <body>
+    <div id="login-container" class="pre-auth">
+        <a href="#" id="login-link">CLICK ME</a> to continue.
+    </div>
+    <div class="past-auth">
+
+    </div>
 <script>
+    (function(){
+        var OAUTH_CLIENT_ID='316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com';
+        var OAUTH_SCOPES='https://www.googleapis.com/auth/youtube.readonly';
+        var channelID;
 
-var OAUTH2_CLIENT_ID = '316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com';
-var OAUTH2_SCOPES = [
-  'https://www.googleapis.com/auth/youtube'
-];
+        window.onJSClientLoad=function(){
+            gapi.auth.init(function(){
+                window.setTimeout(checkAuth,1);
+            });};
 
-googleApiClientReady = function() {
-  gapi.auth.init(function() {
-    window.setTimeout(checkAuth, 1);
-  });
-}
+        function checkAuth(){
+            gapi.auth.authorize({
+                client_id:OAUTH_CLIENT_ID,
+                scope:OAUTH_SCOPES,
+                immediate:true
+            },handleAuthResult);
+        }    
 
-function checkAuth() {
-  gapi.auth.authorize({
-    client_id: OAUTH2_CLIENT_ID,
-    scope: OAUTH2_SCOPES,
-    immediate: true
-  }, handleAuthResult);
-}
+        function handleAuthResult(authResult){
+            if(authResult){
+                $('pre-auth').hide();
+                $('past-auth').show();
+                loadAPI();
+            }else{
+                $('pre-auth').show();
+                $('past-auth').hide();
+                $('#login-link').click(function()
+                {
+                    gapi.auth.authorize(
+                    {
+                        client_id:OAUTH_CLIENT_ID,
+                        scope:OAUTH_SCOPES,
+                        immediate:false
+                    },handleAuthResult);
+                });
+            }
+        }
 
-function handleAuthResult(authResult) {
-  if (authResult && !authResult.error) {
-    // Authorization was successful. Hide authorization prompts and show
-    // content that should be visible after authorization succeeds.
-    $('.pre-auth').hide();
-    $('.post-auth').show();
-    console.log("Sign-in successful");
-    loadAPIClientInterfaces();
-  } else {
-    // Make the #login-link clickable. Attempt a non-immediate OAuth 2.0
-    // client flow. The current function is called when that flow completes.
-    $('#login-link').click(function() {
-      gapi.auth.authorize({
-        client_id: OAUTH2_CLIENT_ID,
-        scope: OAUTH2_SCOPES,
-        immediate: false
-        }, handleAuthResult);
-    });
-  }
-}
+        function loadAPI(){
+            gapi.client.load('youtube','v3',function()
+                {
+                    getUserChannel();
+                })
+        };
 
-function loadAPIClientInterfaces() {
-  gapi.client.load('youtube', 'v3', function() {
-    handleAPILoaded();
-  });
-}
+        function getUserChannel(){
+            var request=gapi.client.youtube.channels.list(
+                {
+                    mine:true,
+                    part:'id,contentDetails'
+                });
+                request.execute(function(response)
+                {
+                    if('error' in response){
+                        displayMessage(response.error.message);
+                    }else{
+                        channelID=response.items[0].id;
+                        displayChannelID(channelID);
+                    }
+                });
+        };
 
-function handleAPILoaded() {
-    gapi.client.setApiKey("AIzaSyDh1x__6yEFiS9m3vdW4hOACvWjvSIKe8I");
-    return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
-        .then(function() { 
-          console.log("GAPI client loaded for API");
-         },
-        function(err) { 
-          console.error("Error loading GAPI client for API", err); 
-        });
-}
+        function displayChannelID(chn){
+            alert(chn);
+        };
 
-function channelsListMine(part,mine){
-    var response=gapi.client.youtube.channels.list(part,
-        {'mine':mine});
-    console.log(response);
-    printResults(response);
-    getdata(response);
-};
+    })();
+
 
 </script>
 
-<button onclick="channelsListMine('snippet,contentDetails,statistics',true)">authorize and load</button>
-    
 </body>
 </html>
