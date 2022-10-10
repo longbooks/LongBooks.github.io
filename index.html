@@ -30,24 +30,24 @@ function loadClient() {
     return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
         .then(function() { 
           console.log("GAPI client loaded for API");
-          channelsListMine('snippet,contentDetails,statistics',true);
+          channelsListMine('snippet,contentDetails,statistics','GoogleDevelopers');
          },
         function(err) { 
           console.error("Error loading GAPI client for API", err); 
         });
 };
 
-function channelsListMine(part,mine){
-    return gapi.client.youtube.channels.list({part:part,mine:mine})
-    .then(function(response) {
-                // Handle the results here (response.result has the parsed body).
-                console.log("Response", response);
-              },
-              function(err) { console.error("Execute error", err); });
-  
-    console.log(response);
-    myfunc(response);
-};
+// function channelsListMine(part,mine){
+//     var response=gapi.client.youtube.channels.list({part:part,mine:mine});  
+//     console.log(response);
+//     myfunc(response);
+// };
+
+function channelsListByUsername(part, forUsername) {
+  var response = gapi.client.youtube.channels.list(part,
+      {'forUsername': forUsername});
+  console.log(response);
+}
 
 
 
