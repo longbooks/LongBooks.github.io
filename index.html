@@ -71,7 +71,7 @@ function main(){
 };
 
 function channelsListMine(part,mine){
-    var response= gapi.client.youtube.Channels.list(part,
+    var response=YouTube.Channels.list(part,
         {'mine':mine});
     console.log(response);
     printResults(response);
