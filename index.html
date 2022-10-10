@@ -38,25 +38,18 @@ function loadClient() {
 };
 
 function channelsListMine(part,mine){
-    var response=gapi.client.youtube.channels.list({part:part,mine:mine});   
+    return gapi.client.youtube.channels.list({part:part,mine:mine})
+    .then(function(response) {
+                // Handle the results here (response.result has the parsed body).
+                console.log("Response", response);
+              },
+              function(err) { console.error("Execute error", err); });
+  
     console.log(response);
     myfunc(response);
 };
 
-function myfunc(res){
-    console.log("clicked");
-    const xhr=new XMLHttpRequest();
-    xhr.open("GET",res,true);
-    xhr.responseType="json";
-    xhr.onload=()=>{
-        if(xhr.status===200){
-            console.log(xhr.response);
-        }else{
-            console.log("Error");
-        }
-    };
-    xhr.send();
-}
+
 
 </script>
 
