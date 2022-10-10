@@ -40,27 +40,28 @@ function loadClient() {
 function channelsListMine(part,mine){
     var response=gapi.client.youtube.channels.list({part:part,mine:mine});   
     console.log(response);
-    getdata(response);
+    myfunc(response);
 };
 
-function getdata(rel){
-    fetch(rel).then((responce)=>{
-        return responce.json();
-    }).then((data)=>{
-        try {
-          console.log(JSON.parse(data));
+function myfunc(res){
+    console.log("clicked");
+    const xhr=new XMLHttpRequest();
+    xhr.open("GET",res,true);
+    xhr.responseType="json";
+    xhr.onload=()=>{
+        if(xhr.status===200){
+            console.log(xhr.response);
+        }else{
+            console.log("Error");
         }
-        catch (error) {
-          console.log('Error parsing JSON:', error);
-        }
-   })
-};
+    };
+    xhr.send();
+}
 
 </script>
 
 
 <button onclick="authenticate().then(loadClient)">authorize and load</button>
-<!-- <button onclick="main()">execute</button> -->
 
 </body>
 
