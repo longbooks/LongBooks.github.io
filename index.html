@@ -44,8 +44,8 @@ function loadClient() {
 // };
 
 function channelsListByUsername(part, forUsername) {
-  var response = gapi.client.youtube.channels.list(part,
-      {'forUsername': forUsername});
+  var response = gapi.client.youtube.channels.list(
+      {part:part,'forUsername': forUsername});
   console.log(response);
 }
 
