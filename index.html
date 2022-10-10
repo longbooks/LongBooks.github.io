@@ -68,7 +68,7 @@
                 request.execute(function(response)
                 {
                     if('error' in response){
-                        displayMessage(response.error.message);
+                        console.log(response.error.message);
                     }else{
                         channelID=response.items[0].id;
                         displayChannelID(channelID);
