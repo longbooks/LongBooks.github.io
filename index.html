@@ -16,7 +16,7 @@
 
   function printResults(response) {
   var props = ['type', 'title', 'textDisplay', 'channelId', 'videoId', 'hl', 'gl', 'label'];
-  for (var r = 0; r < response[params].length; r++) {
+  for (var r = 0; r < response['params'].length; r++) {
     var item = response['items'][r];
     var itemId = '';
     var value;
