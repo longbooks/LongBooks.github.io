@@ -70,7 +70,7 @@
      var response= gapi.client.youtube.channels.list(part,{'mine':mine})
     .then(function(response) {
       console.log("Response", response);
-      // getdata(response);
+      getdata(response);
     },
     function(err) { 
     console.error("Execute error", err); 
