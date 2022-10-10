@@ -36,14 +36,44 @@ function loadClient() {
     });
 };
 
+function printResults(response) {
+  var props = ['type', 'title', 'textDisplay', 'channelId', 'videoId', 'hl', 'gl', 'label'];
+  for (var r = 0; r < response['items'].length; r++) {
+    var item = response['items'][r];
+    var itemId = '';
+    var value;
+    if (item['rating']) {
+      itemId = item['id'];
+      value = 'Rating: ' + item['rating'];
+    } else {
+      if (item['id']['videoId']) {
+        itemId = item['id']['videoId'];
+      } else if (item['id']['channelId']) {
+        itemId = item['id']['channelId'];
+      } else {
+        itemId = item['id'];
+      }
+      
+      for (var p = 0; p < props.length; p++) {
+        if (item['snippet'][props[p]]) {
+          value = itemId + ': ' + item['snippet'][props[p]];
+          break;
+        }
+      }
+    }
+    Logger.log(value);
+  }
+};
+
 function channelsListMine(part,mine){
     var response=gapi.client.youtube.channels.list(part,{mine:mine});  
     console.log(response);
+    printResults(response);
 };
 
 function main(){
   channelsListMine('snippet,contentDetails,statistics',true);
-}
+};
 
 </script>
 
