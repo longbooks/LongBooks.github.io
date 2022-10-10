@@ -72,9 +72,8 @@ function main(){
 
 function channelsListMine(part,mine){
     var response=gapi.client.youtube.channels.list(part,
-        {'mine':mine});
-    var channelID=response.items[0].id;    
-    console.log(channelID);
+        {'mine':mine});   
+    console.log(response);
 };
 
 function getdata(rel){
