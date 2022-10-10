@@ -1,106 +1,120 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Youtube my data Clone</title>
-</head>    
+<html>
+  <head>
+    <title>YouTube Data API Quickstart</title>
+    <meta charset='utf-8' />
+  </head>
+  <body>
+    <p>YouTube Data API Quickstart</p>
 
-<body>
-  <script src="https://apis.google.com/js/api.js"></script>
-<script>
-  
-  gapi.load("client:auth2", function() {
-    gapi.auth2.init({client_id: "316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com"});
-  });
+    <!--Add buttons to initiate auth sequence and sign out-->
+    <button id="authorize-button" style="display: none;">Authorize</button>
+    <button id="signout-button" style="display: none;">Sign Out</button>
 
-function printResults(response) {
-  var props = ['type', 'title', 'textDisplay', 'channelId', 'videoId', 'hl', 'gl', 'label'];
-  var params={0: 's', 1: 'n', 2: 'i', 3: 'p', 4: 'p', 5: 'e', 6: 't', 7: ',', 8: 'c', 9: 'o', 10: 'n', 11: 't', 12: 'e', 13: 'n', 14: 't', 15: 'D', 16: 'e', 17: 't', 18: 'a', 19: 'i', 20: 'l', 21: 's', 22: ',', 23: 's',24: "t", 25: "a",26: "t",27: "i",28: "s",29: "t",30: "i",31: "c",32: "s"};
-  for (var r = 0; r < response['items'].length; r++) {
-    var item = response['items'][r];
-    var itemId = '';
-    var value;
-    if (item['rating']) {
-      itemId = item['id'];
-      value = 'Rating: ' + item['rating'];
-    } else {
-      if (item['id']['videoId']) {
-        itemId = item['id']['videoId'];
-      } else if (item['id']['channelId']) {
-        itemId = item['id']['channelId'];
-      } else {
-        itemId = item['id'];
+    <pre id="content"></pre>
+
+    <script type="text/javascript">
+      // Client ID and API key from the Developer Console
+      var CLIENT_ID = '316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com';
+
+      // Array of API discovery doc URLs for APIs used by the quickstart
+      var DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest"];
+
+      // Authorization scopes required by the API. If using multiple scopes,
+      // separated them with spaces.
+      var SCOPES = 'https://www.googleapis.com/auth/youtube.readonly';
+
+      var authorizeButton = document.getElementById('authorize-button');
+      var signoutButton = document.getElementById('signout-button');
+
+      /**
+       *  On load, called to load the auth2 library and API client library.
+       */
+      function handleClientLoad() {
+        gapi.load('client:auth2', initClient);
       }
-      
-      for (var p = 0; p < props.length; p++) {
-        if (item['snippet'][props[p]]) {
-          value = itemId + ': ' + item['snippet'][props[p]];
-          break;
+
+      /**
+       *  Initializes the API client library and sets up sign-in state
+       *  listeners.
+       */
+      function initClient() {
+        gapi.client.init({
+          discoveryDocs: DISCOVERY_DOCS,
+          clientId: CLIENT_ID,
+          scope: SCOPES
+        }).then(function () {
+          // Listen for sign-in state changes.
+          gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
+
+          // Handle the initial sign-in state.
+          updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
+          authorizeButton.onclick = handleAuthClick;
+          signoutButton.onclick = handleSignoutClick;
+        });
+      }
+
+      /**
+       *  Called when the signed in status changes, to update the UI
+       *  appropriately. After a sign-in, the API is called.
+       */
+      function updateSigninStatus(isSignedIn) {
+        if (isSignedIn) {
+          authorizeButton.style.display = 'none';
+          signoutButton.style.display = 'block';
+          getChannel();
+        } else {
+          authorizeButton.style.display = 'block';
+          signoutButton.style.display = 'none';
         }
       }
-    }
-    Logger.log(value);
-  }
-};
 
-function authenticate() {
-    return gapi.auth2.getAuthInstance()
-        .signIn({scope: "https://www.googleapis.com/auth/youtube.readonly"})
-        .then(function() { 
-          console.log("Sign-in successful");
-         },
-        function(err) { 
-          console.error("Error signing in", err);
+      /**
+       *  Sign in the user upon button click.
+       */
+      function handleAuthClick(event) {
+        gapi.auth2.getAuthInstance().signIn();
+      }
+
+      /**
+       *  Sign out the user upon button click.
+       */
+      function handleSignoutClick(event) {
+        gapi.auth2.getAuthInstance().signOut();
+      }
+
+      /**
+       * Append text to a pre element in the body, adding the given message
+       * to a text node in that element. Used to display info from API response.
+       *
+       * @param {string} message Text to be placed in pre element.
+       */
+      function appendPre(message) {
+        var pre = document.getElementById('content');
+        var textContent = document.createTextNode(message + '\n');
+        pre.appendChild(textContent);
+      }
+
+      /**
+       * Print files.
+       */
+      function getChannel() {
+        gapi.client.youtube.channels.list({
+          'part': 'snippet,contentDetails,statistics',
+          'forUsername': 'GoogleDevelopers'
+        }).then(function(response) {
+          var channel = response.result.items[0];
+          appendPre('This channel\'s ID is ' + channel.id + '. ' +
+                    'Its title is \'' + channel.snippet.title + ', ' +
+                    'and it has ' + channel.statistics.viewCount + ' views.');
         });
-};
+      }
 
-function loadClient() {
-    gapi.client.setApiKey("AIzaSyDh1x__6yEFiS9m3vdW4hOACvWjvSIKe8I");
-    return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
-        .then(function() { 
-          console.log("GAPI client loaded for API");
-         },
-        function(err) { 
-          console.error("Error loading GAPI client for API", err); 
-        });
-};
+    </script>
 
-function main(){
-  channelsListMine('snippet,contentDetails,statistics',true);
-};
-
-function channelsListMine(part,mine){
-    var response= gapi.client.youtube.channels.list(part,
-        {'mine':mine});
-    console.log(response);
-    printResults(response);
-    getdata(response);
-};
-
-function getdata(rel){
-    fetch(rel).then((responce)=>{
-        return responce.json();
-    }).then((data)=>{
-        try {
-          console.log(JSON.parse(data));
-        }
-        catch (error) {
-          console.log('Error parsing JSON:', error);
-        }
-   })
-};
-
-
-
-
-
-</script>
-
-
-<button onclick="authenticate().then(loadClient)">authorize and load</button>
-<button onclick="main()">execute</button>
-
-</body>
-
+    <script async defer src="https://apis.google.com/js/api.js"
+      onload="this.onload=function(){};handleClientLoad()"
+      onreadystatechange="if (this.readyState === 'complete') this.onload()">
+    </script>
+  </body>
 </html>
