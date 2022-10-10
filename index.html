@@ -41,14 +41,8 @@ function main(){
 };
 
 function channelsListMine(part,mine){
-    // var response=gapi.client.youtube.channels.list({
-    //   part:'snippet,contentDetails,statistics',
-    //   mine:mine
-    // });   
-    // console.log(response);
-    // getdata(response);
-
-   gapi.client.youtube.channels.list({part:part,mine:mine}).then(res =>{console.log(res);})
+    var response=gapi.client.youtube.channels.list(part,{mine:mine});   
+    console.log(response);
 };
 
 </script>
