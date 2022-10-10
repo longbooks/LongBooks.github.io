@@ -36,12 +36,12 @@
         
         function handleAuthResult(authResult){
             if(authResult){
-                $('pre-auth').hide();
-                $('past-auth').show();
+                $('.pre-auth').hide();
+                $('.past-auth').show();
                 loadAPI();
             }else{
-                $('pre-auth').show();
-                $('past-auth').hide();
+                $('.pre-auth').show();
+                $('.past-auth').hide();
                 $('#login-link').click(function()
                 {
                     gapi.auth2.authorize(
