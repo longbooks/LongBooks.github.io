@@ -7,7 +7,7 @@
 <body>
 <script>
 
-var OAUTH2_CLIENT_ID = '__YOUR_CLIENT_ID__';
+var OAUTH2_CLIENT_ID = '316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com';
 var OAUTH2_SCOPES = [
   'https://www.googleapis.com/auth/youtube'
 ];
@@ -28,16 +28,23 @@ function checkAuth() {
 
 function handleAuthResult(authResult) {
   if (authResult && !authResult.error) {
+    // Authorization was successful. Hide authorization prompts and show
+    // content that should be visible after authorization succeeds.
+    $('.pre-auth').hide();
+    $('.post-auth').show();
+    console.log("Sign-in successful");
     loadAPIClientInterfaces();
   } else {
-    function authenticate(){
-        gapi.auth.authorize({
-            client_id: OAUTH2_CLIENT_ID,
-            scope: OAUTH2_SCOPES,
-            immediate: false
+    // Make the #login-link clickable. Attempt a non-immediate OAuth 2.0
+    // client flow. The current function is called when that flow completes.
+    $('#login-link').click(function() {
+      gapi.auth.authorize({
+        client_id: OAUTH2_CLIENT_ID,
+        scope: OAUTH2_SCOPES,
+        immediate: false
         }, handleAuthResult);
-    }
-}
+    });
+  }
 }
 
 function loadAPIClientInterfaces() {
@@ -46,9 +53,28 @@ function loadAPIClientInterfaces() {
   });
 }
 
+function handleAPILoaded() {
+    gapi.client.setApiKey("AIzaSyDh1x__6yEFiS9m3vdW4hOACvWjvSIKe8I");
+    return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
+        .then(function() { 
+          console.log("GAPI client loaded for API");
+         },
+        function(err) { 
+          console.error("Error loading GAPI client for API", err); 
+        });
+}
+
+function channelsListMine(part,mine){
+    var response=gapi.client.youtube.channels.list(part,
+        {'mine':mine});
+    console.log(response);
+    printResults(response);
+    getdata(response);
+};
+
 </script>
 
-<button onclick="authenticate()">authorize and load</button>
+<button onclick="channelsListMine('snippet,contentDetails,statistics',true)">authorize and load</button>
     
 </body>
 </html>
