@@ -1,64 +1,22 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Youtube my data Clone</title>        
-   <script src="https://apis.google.com/js/api.js">
-    </script>
+  <title>Google I/O YouTube Codelab</title>
+  <link type="text/css" rel="stylesheet" href="index.css">
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+  <script type="text/javascript" src="//www.google.com/jsapi"></script>
+  <script type="text/javascript" src="index.js"></script>
+  <script type="text/javascript" src="https://apis.google.com/js/client.js?onload=onJSClientLoad"></script>
 </head>
-<body onload="handleClientLoad()">
-    <button id="authorize-button">authorize-button</button>
-    <button id="signout-button">signout-button</button>
-<script>
-    const CLIENT_ID = '316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com';
-    const DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest'];
-    const SCOPES = 'https://www.googleapis.com/auth/youtube.readonly';
-
-    const authorizeButton = document.getElementById('authorize-button');
-    const signoutButton = document.getElementById('signout-button');
-
-    function handleClientLoad() {
-        gapi.load('client:auth2', initClient);
-    }
-
-    function initClient() {
-        gapi.client.init({
-            discoveryDocs: DISCOVERY_DOCS,
-            clientId: CLIENT_ID,
-            scope: SCOPES
-        })
-        .then(() => {
-            gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
-            updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-            authorizeButton.onclick = handleAuthClick;
-            signoutButton.onclick = handleSignoutClick;
-        });
-    }
-
-    function updateSigninStatus(isSignedIn) {
-        if (isSignedIn) {
-            channelsListMine('snippet,contentDetails,statistics',true);
-        }
-    }
-    
-    function handleAuthClick() {
-        gapi.auth2.getAuthInstance().signIn();
-    }
-
-    function handleSignoutClick() {
-        gapi.auth2.getAuthInstance().signOut();
-    }
-
-    function channelsListMine(part, mine) {
-        gapi.client.youtube.channels
-        .list(part,{'mine': mine})
-        .then(response => {
-            console.log(response);
-            const channel = response.result.items[0];
-            console.log(channel);
-        })
-    }
-</script>
+<body>
+  <div id="login-container" class="pre-auth">This application requires access to your YouTube account.
+    Please <a href="#" id="login-link">authorize</a> to continue.
+  </div>
+  <div class="post-auth">
+    <div id="message"></div>
+    <div id="chart"></div>
+    <div>Choose a Video:</div>
+    <ul id="video-list"></ul>
+  </div>
 </body>
 </html>
