@@ -1,6 +1,6 @@
 (function(){
     var OAUTH_CLIENT_ID='316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com';
-    var OAUTH_SCOPES='https://www.googleapis.com/auth/youtube.readonly';
+    var OAUTH_SCOPES=['https://www.googleapis.com/auth/youtube.readonly'];
     var channelID;
      
     window.onJSClientLoad=function(){
@@ -14,7 +14,7 @@
             scope:OAUTH_SCOPES,
             immediate:true
         },handleAuthResult);
-    }
+    }; 
     
     function handleAuthResult(authResult)
     {
@@ -39,7 +39,7 @@
     };
     
     function loadApi(){
-        gapi.client.load('https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest',function()
+        gapi.client.load('youtube','v3',function()
         {
             getUserChannel();
 
@@ -70,5 +70,5 @@
     {
         alert(chal);
     };
-    
+
 })();
