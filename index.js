@@ -39,7 +39,7 @@
     };
     
     function loadApi(){
-        gapi.client.load('youtube','v3',function()
+        gapi.client.load('https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest',function()
         {
             getUserChannel();
 
