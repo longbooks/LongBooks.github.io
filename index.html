@@ -6,43 +6,33 @@
     <title>Youtube my data Clone</title>
     <script src="https://apis.google.com/js/api.js"></script>
 </head>    
-<body onload="googleApiClientReady">
+<body onload="googleApiClientReady()">
 <script>
 var OAUTH2_CLIENT_ID = '316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com';
-var OAUTH2_SCOPES = ['https://www.googleapis.com/auth/youtube'];
+var OAUTH2_SCOPES =  'https://www.googleapis.com/auth/youtube';
+var DISCOVERY_DOCS= 'https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest';
 
-googleApiClientReady = function() {
-  gapi.auth.init(function() {
-    window.setTimeout(checkAuth, 1);
-  });
+function googleApiClientReady(){
+  gapi.load("client:auth2",initClient);
 }
 
-function checkAuth() {
-  gapi.auth.authorize({
+function initClient() {
+  gapi.auth2.init({
+    discoveryDocs:DISCOVERY_DOCS,
     client_id: OAUTH2_CLIENT_ID,
     scope: OAUTH2_SCOPES,
-    immediate: true
-  }, handleAuthResult);
-}
-
-function handleAuthResult(authResult) {
-  if (authResult && !authResult.error) {
-    loadAPIClientInterfaces();
-  } else {
-    $('#login-link').click(function() {
-      gapi.auth.authorize({
-        client_id: OAUTH2_CLIENT_ID,
-        scope: OAUTH2_SCOPES,
-        immediate: false
-        }, handleAuthResult);
-    });
-  }
-}
-
-function loadAPIClientInterfaces() {
-  gapi.client.load('youtube', 'v3', function() {
-    getUserChannel();
+  }).then(() =>{
+    return gapi.auth2.getAuthInstance()
+      .signIn({scope: "https://www.googleapis.com/auth/youtube.readonly"})
+      .then(function() { 
+        console.log("Sign-in successful");
+        getUserChannel();
+      },
+      function(err) { 
+        console.error("Error signing in", err);
+      });
   });
+
 }
 
 function getUserChannel() {
@@ -64,8 +54,8 @@ function displayId(channelidshow){
   alert(channelidshow);
 }
 
-
-
 </script>
+<button onclick="authenticate()">authorize and load</button>
+<button onclick="main()">execute</button>
 </body>
 </html>
