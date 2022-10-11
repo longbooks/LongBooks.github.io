@@ -10,7 +10,9 @@
 <body>
   
 <script>
-  
+    gapi.load("client:auth2", function() {
+        gapi.auth2.init({client_id: "316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com"});
+    });
 function authenticate() {
     return gapi.auth2.getAuthInstance()
     .signIn({scope: "https://www.googleapis.com/auth/youtube.readonly"})
@@ -75,13 +77,7 @@ function main(){
   channelsListMine('snippet,contentDetails,statistics',true);
 };
 
-gapi.load("client:auth2", function() {
-    gapi.auth2.init({client_id: "316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com"});
-});
-
-
 </script>
-
 
 <button onclick="authenticate().then(loadClient)">authorize and load</button>
 <button onclick="main()">execute</button>
