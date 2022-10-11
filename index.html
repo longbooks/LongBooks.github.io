@@ -6,18 +6,24 @@
     <title>Youtube my data Clone</title>
     <script src="https://apis.google.com/js/api.js"></script>
 </head>    
-<body>
+<body onload="googleApiClientReady">
 <script>
 var OAUTH2_CLIENT_ID = '316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com';
 var OAUTH2_SCOPES = ['https://www.googleapis.com/auth/youtube'];
 
-gapi.load("client:auth2", function() {
-    gapi.auth2.init({
-      client_id:OAUTH2_CLIENT_ID,
-      scope: OAUTH2_SCOPES,
-      immediate: true
-    },handleAuthResult);
-});
+googleApiClientReady = function() {
+  gapi.auth.init(function() {
+    window.setTimeout(checkAuth, 1);
+  });
+}
+
+function checkAuth() {
+  gapi.auth.authorize({
+    client_id: OAUTH2_CLIENT_ID,
+    scope: OAUTH2_SCOPES,
+    immediate: true
+  }, handleAuthResult);
+}
 
 function handleAuthResult(authResult) {
   if (authResult && !authResult.error) {
