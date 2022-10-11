@@ -6,81 +6,60 @@
     <title>Youtube my data Clone</title>
     <script src="https://apis.google.com/js/api.js"></script>
 </head>    
-
 <body>
-  
 <script>
+var OAUTH2_CLIENT_ID = '316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com';
+var OAUTH2_SCOPES = ['https://www.googleapis.com/auth/youtube'];
 
 gapi.load("client:auth2", function() {
-    gapi.auth2.init({client_id: "316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com"});
+    gapi.auth2.init({
+      client_id:OAUTH2_CLIENT_ID,
+      scope: OAUTH2_SCOPES,
+      immediate: true
+    },handleAuthResult);
 });
-  
-function authenticate() {
-   gapi.auth2.getAuthInstance()
-    .signIn({scope: "https://www.googleapis.com/auth/youtube.readonly"})
-    .then(function() { 
-      console.log("Sign-in successful");
-    },
-    function(err) { 
-      console.error("Error signing in", err);
-    });
-};
 
-function loadClient() {
-    gapi.client.setApiKey("AIzaSyDh1x__6yEFiS9m3vdW4hOACvWjvSIKe8I");
-    return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
-    .then(function() { 
-      console.log("GAPI client loaded for API");
-    },
-    function(err) {
-      console.error("Error loading GAPI client for API", err); 
+function handleAuthResult(authResult) {
+  if (authResult && !authResult.error) {
+    loadAPIClientInterfaces();
+  } else {
+    $('#login-link').click(function() {
+      gapi.auth.authorize({
+        client_id: OAUTH2_CLIENT_ID,
+        scope: OAUTH2_SCOPES,
+        immediate: false
+        }, handleAuthResult);
     });
-};
-
-function printResults(response) {
-  var props = ['type', 'title', 'textDisplay', 'channelId', 'videoId', 'hl', 'gl', 'label'];
-  for (var r = 0; r < response['items'].length; r++) {
-    var item = response['items'][r];
-    var itemId = '';
-    var value;
-    if (item['rating']) {
-      itemId = item['id'];
-      value = 'Rating: ' + item['rating'];
-    } else {
-      if (item['id']['videoId']) {
-        itemId = item['id']['videoId'];
-      } else if (item['id']['channelId']) {
-        itemId = item['id']['channelId'];
-      } else {
-        itemId = item['id'];
-      }
-      
-      for (var p = 0; p < props.length; p++) {
-        if (item['snippet'][props[p]]) {
-          value = itemId + ': ' + item['snippet'][props[p]];
-          break;
-        }
-      }
-    }
-    Logger.log(value);
   }
-};
-
-function channelsListMine(part, mine){
-    var response=gapi.client.youtube.channels.list(part,
-        {'mine': mine});  
-    console.log(response);
 }
 
-function main(){
-  channelsListMine('snippet,contentDetails,statistics',true);
+function loadAPIClientInterfaces() {
+  gapi.client.load('youtube', 'v3', function() {
+    getUserChannel();
+  });
 }
+
+function getUserChannel() {
+  var request = gapi.client.youtube.channels.list({
+    mine: true,
+    part: 'id,contentDetails'
+  });
+  request.execute(function(response) {
+      if ('error' in response) {
+        console.log(response.error.message);
+      } else {
+        channelId = response.items[0].id;
+        displayId(channelId);
+      }
+    });
+}
+
+function displayId(channelidshow){
+  alert(channelidshow);
+}
+
+
 
 </script>
-
-<button onclick="authenticate().then(loadClient)">authorize and load</button>
-<button onclick="main()">execute</button>
-
 </body>
-
 </html>
