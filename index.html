@@ -6,15 +6,9 @@
     <title>Youtube my data Clone</title>
     <script src="https://apis.google.com/js/api.js"></script>
 </head>    
-
 <body>
-  
 <script>
 
-gapi.load("client:auth2", function() {
-    gapi.auth2.init({client_id: "316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com"});
-});
-  
 function authenticate() {
     return gapi.auth2.getAuthInstance()
     .signIn({scope: "https://www.googleapis.com/auth/youtube.readonly"})
@@ -24,7 +18,7 @@ function authenticate() {
     function(err) { 
       console.error("Error signing in", err);
     });
-};
+}
 
 function loadClient() {
     gapi.client.setApiKey("AIzaSyDh1x__6yEFiS9m3vdW4hOACvWjvSIKe8I");
@@ -35,21 +29,32 @@ function loadClient() {
     function(err) {
       console.error("Error loading GAPI client for API", err); 
     });
-};
+}
 
-function getUserChannel(part,mine) {
-  var request = gapi.client.youtube.channels.list(part,{mine: mine});
-  console.log(request);
-};
+function getUserChannel() {
+  // var request = gapi.client.youtube.channels.list(part,{mine: mine});
+  // console.log(request);
 
-function main(){
-  getUserChannel('id,contentDetails',true);
-};
+  return gapi.client.youtube.channels.list({
+      "part": [
+        "snippet,contentDetails,statistics"
+      ],
+      "mine": true
+    })
+        .then(function(response) {
+                // Handle the results here (response.result has the parsed body).
+                console.log("Response", response);
+              },
+              function(err) { console.error("Execute error", err); });
 
+}
+
+gapi.load("client:auth2", function() {
+    gapi.auth2.init({client_id: "316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com"});
+});
 </script>
-
 <button onclick="authenticate().then(loadClient)">authorize and load</button>
-<button onclick="main()">Run</button>
+<button onclick="getUserChannel()">Run</button>
 
 </body>
 </html>
