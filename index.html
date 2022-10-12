@@ -2,16 +2,15 @@
 <html lang="en">
 <head>
     <title>Youtube my data Clone</title>
-    <script src="https://apis.google.com/js/api.js?onload=googleApiClientReady"></script>
-    <script src="index.js"></script>
-
-<!-- <script src="https://apis.google.com/js/api.js"
-    onload="this.onload=function(){};googleApiClientReady()"
-    onreadystatechange="if (this.readyState === 'complete') this.onload()">
-</script> -->
-
+    <!-- client.js -->
 </head>    
 <body>
   <button id="authorize-button">authorize-button</button>
+
+  <script src="index.js"></script>
+  <script async defer src="https://apis.google.com/js/api.js"onload="this.onload=function(){};handleClientLoad()"
+  onreadystatechange="if (this.readyState === 'complete') this.onload()">
+  </script>
+ 
 </body>
 </html>
