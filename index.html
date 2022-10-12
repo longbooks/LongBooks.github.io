@@ -4,10 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Youtube my data Clone</title>
-    <script src="https://apis.google.com/js/api.js"></script>
+    <script src="https://apis.google.com/js/api.js" onload="googleApiClientReady"></script>
 </head>    
-<body onload="googleApiClientReady()">
+<body>
+  <button id="authorize-button">authorize-button</button>
+  <button id="signout-button">signout-button</button>
 <script>
+const authorizeButton = document.getElementById('authorize-button');
+const signoutButton = document.getElementById('signout-button');
+
 var OAUTH2_CLIENT_ID = '316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com';
 var OAUTH2_SCOPES =  'https://www.googleapis.com/auth/youtube';
 var DISCOVERY_DOCS= 'https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest';
@@ -22,7 +27,13 @@ function initClient() {
     client_id: OAUTH2_CLIENT_ID,
     scope: OAUTH2_SCOPES,
   }).then(() =>{
-    return gapi.auth2.getAuthInstance()
+    authorizeButton.onclick = handleAuthClick;
+    signoutButton.onclick = handleSignoutClick;
+  });
+}
+
+function handleAuthClick(){
+  return gapi.auth2.getAuthInstance()
       .signIn({scope: "https://www.googleapis.com/auth/youtube.readonly"})
       .then(function() { 
         console.log("Sign-in successful");
@@ -31,8 +42,6 @@ function initClient() {
       function(err) { 
         console.error("Error signing in", err);
       });
-  });
-
 }
 
 function getUserChannel() {
@@ -53,9 +62,6 @@ function getUserChannel() {
 function displayId(channelidshow){
   alert(channelidshow);
 }
-
 </script>
-<button onclick="authenticate()">authorize and load</button>
-<button onclick="main()">execute</button>
 </body>
 </html>
