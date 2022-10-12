@@ -4,13 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Youtube my data Clone</title>
-    <script src="https://apis.google.com/js/api.js"></script>
 </head>    
 <body>
+<script src="https://apis.google.com/js/api.js"></script>  
 <script>
-
 function authenticate() {
-    return gapi.auth2.getAuthInstance()
+    return window.gapi.auth2.getAuthInstance()
     .signIn({scope: "https://www.googleapis.com/auth/youtube.readonly"})
     .then(function() { 
       console.log("Sign-in successful");
