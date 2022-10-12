@@ -31,23 +31,21 @@ function loadClient() {
     return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
     .then(function() { 
       console.log("GAPI client loaded for API");
-      getUserChannel();
     },
     function(err) {
       console.error("Error loading GAPI client for API", err); 
     });
 };
 
-function getUserChannel() {
-  var request = gapi.client.youtube.channels.list({
-    mine: true,
-    part: 'id,contentDetails'
-  });
+function getUserChannel(part,mine) {
+  var request = gapi.client.youtube.channels.list(part,{mine: true});
   request.execute(function(response) {
     if ('error' in response) {
       console.log(response.error.message);
     }else{
       channelId = response.items[0].id;
+      console.log(response);
+      console.log(response.items[0]);
       displayId(channelId);
     }
   });
@@ -64,13 +62,14 @@ function displayId(channelidshow){
 //     console.log(response);
 // }
 
-// function main(){
-//   channelsListMine('snippet,contentDetails,statistics',true);
-// }
+function main(){
+  getUserChannel('id,contentDetails',true);
+};
 
 </script>
 
 <button onclick="authenticate().then(loadClient)">authorize and load</button>
+<button onclick="main()">Run</button>
 
 </body>
 </html>
