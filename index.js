@@ -10,7 +10,7 @@ const authorizeButton = document.getElementById('authorize');
 // };
 
 gapi.load("client:auth2", function() {
-  gapi.auth2.init({
+  gapi.client.init({
     discoveryDocs:DISCOVERY_DOCS,
     client_id:CLIENT_ID,
     scope: SCOPES
