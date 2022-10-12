@@ -17,7 +17,7 @@ gapi.load("client:auth2", function() {
   
 function authenticate() {
     return gapi.auth2.getAuthInstance()
-    .signIn("https://www.googleapis.com/auth/youtube.readonly")
+    .signIn({scope: "https://www.googleapis.com/auth/youtube.readonly"})
     .then(function() { 
       console.log("Sign-in successful");
     },
