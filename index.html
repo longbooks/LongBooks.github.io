@@ -19,7 +19,7 @@ function googleApiClientReady(){
 }
 
 function initClient() {
-  gapi.auth2.init({
+  gapi.client.init({
     discoveryDocs:DISCOVERY_DOCS,
     client_id: OAUTH2_CLIENT_ID,
     scope: OAUTH2_SCOPES
