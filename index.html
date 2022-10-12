@@ -42,7 +42,7 @@ function main(){
 };
 
 function getUserChannel(part,mine) {
-  var request = gapi.client.youtube.channels.list(part,{mine: true});
+  var request = gapi.client.youtube.channels.list(part,{mine: mine});
   request.execute(function(response) {
     if ('error' in response) {
       console.log(response.error.message);
