@@ -2,22 +2,35 @@ const CLIENT_ID = '316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleuser
 const DISCOVERY_DOCS= ['https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest'];
 const SCOPES =  'https://www.googleapis.com/auth/youtube.readonly';
 
+
 const authorizeButton = document.getElementById('authorize-button');
 
-function handleClientLoad(){
-  gapi.load("client:auth2",initClient);
-};
+// function handleClientLoad(){
+//   gapi.load("client:auth2",initClient);
+// };
 
-function initClient() {
-  gapi.client.init({
+gapi.load("client:auth2", function() {
+  gapi.auth2.init({
     discoveryDocs:DISCOVERY_DOCS,
-    clientid: CLIENT_ID,
+    client_id:CLIENT_ID,
     scope: SCOPES
   }).then(function(){
     console.log("load");
     authorizeButton.onclick = handleAuthClick;
   });
-};
+
+});
+
+// function initClient() {
+//   gapi.client.init({
+//     discoveryDocs:DISCOVERY_DOCS,
+//     clientid: CLIENT_ID,
+//     scope: SCOPES
+//   }).then(function(){
+//     console.log("load");
+//     authorizeButton.onclick = handleAuthClick;
+//   });
+// };
 
 function handleAuthClick(){
   return gapi.auth2.getAuthInstance()
