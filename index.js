@@ -3,7 +3,7 @@ const DISCOVERY_DOCS= ['https://www.googleapis.com/discovery/v1/apis/youtube/v3/
 const SCOPES =  'https://www.googleapis.com/auth/youtube.readonly';
 
 
-const authorizeButton = document.getElementById('authorize-button');
+const authorizeButton = document.getElementById('authorize');
 
 // function handleClientLoad(){
 //   gapi.load("client:auth2",initClient);
