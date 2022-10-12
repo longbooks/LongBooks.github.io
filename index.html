@@ -36,6 +36,10 @@ function loadClient() {
       console.error("Error loading GAPI client for API", err); 
     });
 };
+    
+function main(){
+  getUserChannel('id,contentDetails',true);
+};
 
 function getUserChannel(part,mine) {
   var request = gapi.client.youtube.channels.list(part,{mine: true});
@@ -53,17 +57,6 @@ function getUserChannel(part,mine) {
 
 function displayId(channelidshow){
   alert(channelidshow);
-};
-
-
-// function channelsListMine(part, mine){
-//     var response=gapi.client.youtube.channels.list(part,
-//         {'mine': mine});  
-//     console.log(response);
-// }
-
-function main(){
-  getUserChannel('id,contentDetails',true);
 };
 
 </script>
