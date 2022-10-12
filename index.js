@@ -1,17 +1,17 @@
-var CLIENT_ID = '316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com';
-var SCOPES =  'https://www.googleapis.com/auth/youtube.readonly';
-var DISCOVERY_DOCS= ['https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest'];
+const CLIENT_ID = '316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com';
+const DISCOVERY_DOCS= ['https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest'];
+const SCOPES =  'https://www.googleapis.com/auth/youtube.readonly';
 
 const authorizeButton = document.getElementById('authorize-button');
 
-function googleApiClientReady(){
+function handleClientLoad(){
   gapi.load("client:auth2",initClient);
 };
 
 function initClient() {
   gapi.client.init({
     discoveryDocs:DISCOVERY_DOCS,
-    client_id: CLIENT_ID,
+    clientid: CLIENT_ID,
     scope: SCOPES
   }).then(function(){
     console.log("load");
