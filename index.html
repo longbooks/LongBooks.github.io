@@ -31,7 +31,7 @@ function initClient() {
 
 function handleAuthClick(){
   return gapi.auth2.getAuthInstance()
-  .signIn({scope: "https://www.googleapis.com/auth/youtube.readonly"})
+  .signIn()
   .then(function() { 
     console.log("Sign-in successful");
     getUserChannel();
