@@ -1,67 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Youtube my data Clone</title>
-     <script src="https://apis.google.com/js/api.js"
-        onload="this.onload=function(){};googleApiClientReady()"
-        onreadystatechange="if (this.readyState === 'complete') this.onload()">
-    </script>
+    <script src="index.js" onload="googleApiClientReady()"></script>
+    <script src="https://apis.google.com/js/api.js"></script>
+
+<!-- <script src="https://apis.google.com/js/api.js"
+    onload="this.onload=function(){};googleApiClientReady()"
+    onreadystatechange="if (this.readyState === 'complete') this.onload()">
+</script> -->
+
 </head>    
 <body>
   <button id="authorize-button">authorize-button</button>
-<script>
-var OAUTH2_CLIENT_ID = '316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com';
-var OAUTH2_SCOPES =  'https://www.googleapis.com/auth/youtube.readonly';
-var DISCOVERY_DOCS= ['https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest'];
-const authorizeButton = document.getElementById('authorize-button');
-
-function googleApiClientReady(){
-  gapi.load("client:auth2",initClient);
-};
-
-function initClient() {
-  gapi.client.init({
-    discoveryDocs:DISCOVERY_DOCS,
-    client_id: OAUTH2_CLIENT_ID,
-    scope: OAUTH2_SCOPES
-  }).then(function(){
-    console.log("load");
-    authorizeButton.onclick = handleAuthClick;
-  });
-};
-
-function handleAuthClick(){
-  return gapi.auth2.getAuthInstance()
-  .signIn()
-  .then(function() { 
-    console.log("Sign-in successful");
-    getUserChannel();
-  },
-  function(err) { 
-     console.error("Error signing in", err);
-    });
-};
-
-function getUserChannel() {
-  var request = gapi.client.youtube.channels.list({
-    mine: true,
-    part: 'id,contentDetails'
-  });
-  request.execute(function(response) {
-      if ('error' in response) {
-        console.log(response.error.message);
-      } else {
-        channelId = response.items[0].id;
-        displayId(channelId);
-      }
-    });
-}
-
-function displayId(channelidshow){
-  alert(channelidshow);
-}
-</script>
 </body>
 </html>
