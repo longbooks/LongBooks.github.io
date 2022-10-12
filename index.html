@@ -40,29 +40,12 @@ function loadClient() {
 function getUserChannel(part,mine) {
   var request = gapi.client.youtube.channels.list(part,{mine: mine});
   console.log(request);
-
-  // request.execute(function(response) {
-  //   if ('error' in response) {
-  //     console.log(response.error.message);
-  //   }else{
-  //     channelId = response.items[0].id;
-  //     console.log(response);
-  //     console.log(response.items[0]);
-  //     displayId(channelId);
-  //   }
-  // });
-
 };
 
 function main(){
   getUserChannel('id,contentDetails',true);
 };
 
-// function channelsListMine(part, mine){
-//     var response=gapi.client.youtube.channels.list(part,
-//         {'mine': mine});  
-//     console.log(response);
-// }
 </script>
 
 <button onclick="authenticate().then(loadClient)">authorize and load</button>
