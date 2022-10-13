@@ -18,7 +18,9 @@
         });
       }
       function getToken() {
-        client.requestAccessToken();
+        client.requestAccessToken()
+        .then(function() { console.log("Sign-in successful"); },
+              function(err) { console.error("Error signing in", err); });
       }
       function revokeToken() {
         google.accounts.oauth2.revoke(access_token, () => {console.log('access token revoked')});
