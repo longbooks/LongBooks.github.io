@@ -9,13 +9,8 @@
 <script src="https://apis.google.com/js/api.js"></script>  
 <script>
 function authenticate() {
-  var GoogleAuth= gapi.auth2.getAuthInstance({
-    apiKey:'AIzaSyBTJnaY-IbClJu84zEEv1lGYQlXHvQeLu0',
-    fetch_basic_profile:false,
-    scope:'https://www.googleapis.com/auth/youtube.readonly',
-    hosted_domain:'https://longbooks.github.io'
-  });
-  GoogleAuth.signIn()
+  var GoogleAuth= gapi.auth2.getAuthInstance();
+  GoogleAuth.signIn({scope:"https://www.googleapis.com/auth/youtube.readonly"})
     .then(function() { 
       console.log("Sign-in successful");
     })
@@ -63,7 +58,7 @@ gapi.load("client:auth2", function() {
     gapi.auth2.init({client_id: "141290470186-e63pmerr4gft8cep5gptbbjlo3gcqn5u.apps.googleusercontent.com"});
 });
 </script>
-<button onclick="authenticate()">authorize and load</button>
+<button onclick="authenticate().then(loadClient)">authorize and load</button>
 <button onclick="getUserChannel()">Run</button>
 
 </body>
