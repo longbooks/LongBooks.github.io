@@ -10,7 +10,7 @@
 <script>
 function authenticate() {
     return gapi.auth2.getAuthInstance()
-    .signIn({scope: "https://www.googleapis.com/auth/youtube.readonly"})
+    .signIn({scope: "https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/youtube.readonly"})
     .then(function() { 
       console.log("Sign-in successful");
     },
