@@ -1,59 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Youtube my data Clone</title>
-</head>    
+  <meta name="google-signin-client_id" content="141290470186-e63pmerr4gft8cep5gptbbjlo3gcqn5u.apps.googleusercontent.com">
+</head>
 <body>
-<script src="https://apis.google.com/js/platform.js"></script>  
-<script>
-function authenticate() {
-    return gapi.auth2.getAuthInstance()
-    .signIn({scope: "https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/youtube.readonly"})
-    .then(function() { 
-      console.log("Sign-in successful");
-    },
-    function(err) { 
-      console.error("Error signing in", err);
-    });
-}
+  <div id="my-signin2"></div>
+  <script>
+    function onSuccess(googleUser) {
+      console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
+    }
+    function onFailure(error) {
+      console.log(error);
+    }
+    function renderButton() {
+      gapi.signin2.render('my-signin2', {
+        'scope': 'profile email',
+        'width': 240,
+        'height': 50,
+        'longtitle': true,
+        'theme': 'dark',
+        'onsuccess': onSuccess,
+        'onfailure': onFailure
+      });
+    }
+  </script>
 
-function loadClient() {
-    gapi.client.setApiKey("AIzaSyBTJnaY-IbClJu84zEEv1lGYQlXHvQeLu0");
-    return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
-    .then(function() { 
-      console.log("GAPI client loaded for API");
-    },
-    function(err) {
-      console.error("Error loading GAPI client for API", err); 
-    });
-}
-
-function getUserChannel() {
-  // var request = gapi.client.youtube.channels.list(part,{mine: mine});
-  // console.log(request);
-
-  return gapi.client.youtube.channels.list({
-      "part": [
-        "snippet,contentDetails,statistics"
-      ],
-      "mine": true
-    })
-        .then(function(response) {
-                // Handle the results here (response.result has the parsed body).
-                console.log("Response", response);
-              },
-              function(err) { console.error("Execute error", err); });
-
-}
-
-gapi.load("client:auth2", function() {
-    gapi.auth2.init({client_id: "141290470186-e63pmerr4gft8cep5gptbbjlo3gcqn5u.apps.googleusercontent.com"});
-});
-</script>
-<button onclick="authenticate().then(loadClient)">authorize and load</button>
-<button onclick="getUserChannel()">Run</button>
-
+  <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
 </body>
 </html>
