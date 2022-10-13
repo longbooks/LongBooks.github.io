@@ -9,7 +9,7 @@
 <script src="https://apis.google.com/js/api.js"></script>  
 <script>
 function authenticate() {
-    return window.gapi.auth2.getAuthInstance()
+    return gapi.auth2.getAuthInstance()
     .signIn({scope: "https://www.googleapis.com/auth/youtube.readonly"})
     .then(function() { 
       console.log("Sign-in successful");
@@ -20,7 +20,7 @@ function authenticate() {
 }
 
 function loadClient() {
-    gapi.client.setApiKey("AIzaSyDh1x__6yEFiS9m3vdW4hOACvWjvSIKe8I");
+    gapi.client.setApiKey("AIzaSyBTJnaY-IbClJu84zEEv1lGYQlXHvQeLu0");
     return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
     .then(function() { 
       console.log("GAPI client loaded for API");
@@ -49,7 +49,7 @@ function getUserChannel() {
 }
 
 gapi.load("client:auth2", function() {
-    gapi.auth2.init({client_id: "316244741974-m4otm3490uhieom1ovcn0n00v2eq5c9j.apps.googleusercontent.com"});
+    gapi.auth2.init({client_id: "141290470186-e63pmerr4gft8cep5gptbbjlo3gcqn5u.apps.googleusercontent.com"});
 });
 </script>
 <button onclick="authenticate().then(loadClient)">authorize and load</button>
