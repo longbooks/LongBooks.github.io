@@ -1,43 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta name="google-signin-client_id" content="141290470186-e63pmerr4gft8cep5gptbbjlo3gcqn5u.apps.googleusercontent.com">
-        <script src="https://accounts.google.com/gsi/client" async defer ></script>
-    </head>
-    <body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Youtube my data Clone</title>
+</head>    
+<body>
+<script src="https://apis.google.com/js/api.js"></script>  
+<script>
+function authenticate() {
+  var GoogleAuth= gapi.auth2.getAuthInstance({
+    apiKey:'AIzaSyBTJnaY-IbClJu84zEEv1lGYQlXHvQeLu0',
+    fetch_basic_profile:false,
+    scope:'https://www.googleapis.com/auth/youtube.readonly',
+    hosted_domain:'https://longbooks.github.io'
+  });
+  GoogleAuth.signIn()
+    .then(function() { 
+      console.log("Sign-in successful");
+    })
+    .catch(function(err){
+      console.log(err);
+    });
+  
+    // return gapi.auth2.getAuthInstance()
+    // .signIn({scope:"https://www.googleapis.com/auth/youtube.readonly"})
+    // .then(function() { 
+    //   console.log("Sign-in successful");
+    // },
+    // function(err) { 
+    //   console.error("Error signing in", err);
+    // });
+}
 
-        <div id="g_id_onload" 
-          data-client_id="141290470186-e63pmerr4gft8cep5gptbbjlo3gcqn5u.apps.googleusercontent.com"
-          data-context="signin"
-          data-ux_mode="popup"
-          data-callback="handleCredentialResponse"
-          data-auto_prompt="false">    
-        </div>
+function loadClient() {
+    gapi.client.setApiKey("AIzaSyBTJnaY-IbClJu84zEEv1lGYQlXHvQeLu0");
+    return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
+    .then(function() { 
+      console.log("GAPI client loaded for API");
+    },
+    function(err) {
+      console.error("Error loading GAPI client for API", err); 
+    });
+}
 
-        <div class="g_id_signin"
-        data-type="standard"
-        data-shape="rectangular"
-        data-theme="outline"
-        data-text="signin_with"
-        data-size="large"
-        data-logo_alignment="left">
-        </div>
+function getUserChannel() {
+  return gapi.client.youtube.channels.list({
+      "part": [
+        "snippet,contentDetails,statistics"
+      ],
+      "mine": true
+    })
+    .then(function(response) {
+      console.log("Response", response);
+    },
+    function(err) { 
+      console.error("Execute error", err);
+    });
+}
 
-        <script>
-            function handleCredentialResponse(response){
-                const responsePayload=decodeJwtResponse(response.credential);
-                console.log(responsePayload.sub);
-                console.log(responsePayload.name);
-                console.log(responsePayload.given_name);
-                console.log(responsePayload.family_name);
-                console.log(responsePayload.picture);
-                console.log(responsePayload.email);
-            }
+gapi.load("client:auth2", function() {
+    gapi.auth2.init({client_id: "141290470186-e63pmerr4gft8cep5gptbbjlo3gcqn5u.apps.googleusercontent.com"});
+});
+</script>
+<button onclick="authenticate().then(loadClient)">authorize and load</button>
+<button onclick="getUserChannel()">Run</button>
 
-            function decodeJwtResponse(data){
-                var tokens = data.split(".");
-                return JSON.parse(atob(tokens[1]));
-            }
-        </script>
-    </body>
+</body>
 </html>
