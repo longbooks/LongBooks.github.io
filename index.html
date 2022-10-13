@@ -36,7 +36,7 @@
 
             function decodeJwtResponse(data){
                 var tokens = data.split(".");
-                return JSON.parse(atab(tokens[1]));
+                return JSON.parse(atob(tokens[1]));
             }
         </script>
     </body>
