@@ -1,35 +1,38 @@
 <!DOCTYPE html>
-  <html>
-    <head>
-      <script src="https://apis.google.com/js/api.js"></script>
-      <script>
-        function start() {
-          gapi.client.init({
-            'apiKey': 'AIzaSyBTJnaY-IbClJu84zEEv1lGYQlXHvQeLu0',
-            'clientId': '141290470186-e63pmerr4gft8cep5gptbbjlo3gcqn5u.apps.googleusercontent.com',
-            'scope': 'https://www.googleapis.com/auth/youtube.readonly',
-            'discoveryDocs': ['https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest'],
-          }).then(function() {
-            // Execute an API request which is returned as a Promise.
-            // The method name language.translations.list comes from the API discovery.
-            return gapi.client.youtube.channels.list({
-              "part": [
-                "snippet,contentDetails,statistics"
-              ],
-              "mine": true
-            });
-          }).then(function(response) {
-            console.log(response.result);
-          }, function(reason) {
-            console.log('Error: ' + reason.result);
-          });
-        };
+<html>
+  <head>
+    <script src="https://accounts.google.com/gsi/client" onload="initClient()" async defer></script>
+  </head>
+  <body>
+    <script>
+      var client;
+      var access_token;
 
-        // Load the JavaScript client library and invoke start afterwards.
-        gapi.load('client', start);
-      </script>
-    </head>
-    <body>
-      <div id="results"></div>
-    </body>
-  </html>
+      function initClient() {
+        client = google.accounts.oauth2.initTokenClient({
+          client_id: '141290470186-e63pmerr4gft8cep5gptbbjlo3gcqn5u.apps.googleusercontent.com',
+          scope: 'https://www.googleapis.com/auth/youtube.readonly',
+          callback: (tokenResponse) => {
+            access_token = tokenResponse.access_token;
+          },
+        });
+      }
+      function getToken() {
+        client.requestAccessToken();
+      }
+      function revokeToken() {
+        google.accounts.oauth2.revoke(access_token, () => {console.log('access token revoked')});
+      }
+      function loadCalendar() {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest');
+        xhr.setRequestHeader('Authorization', 'Bearer ' + access_token);
+        xhr.send();
+      }
+    </script>
+    <h1>Google Identity Services Authorization Token model</h1>
+    <button onclick="getToken();">Get access token</button><br><br>
+    <button onclick="loadCalendar();">Load Calendar</button><br><br>
+    <button onclick="revokeToken();">Revoke token</button>
+  </body>
+</html>
