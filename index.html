@@ -1,41 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using one tap sigin"
-    />
-    <script src="https://accounts.google.com/gsi/client" async defer ></script>
-    <script>
-      window.onGoogleLibraryLoad = () => {
-      google.accounts.id.initialize({
-        client_id:'141290470186-e63pmerr4gft8cep5gptbbjlo3gcqn5u.apps.googleusercontent.com',
-        cancel_on_tap_outside: false,
-        //callback: onOneTapSignedIn,
-        prompt_parent_id: "root",
-        //intermediate_iframe_close_callback : close_callback1
-      });
-      google.accounts.id.prompt((notification) => {
-        if (notification.isNotDisplayed()) {
-          console.log(notification.getNotDisplayedReason());
-        } else if (notification.isSkippedMoment()) {
-          console.log(notification.getSkippedReason());
-        } else if (notification.isDismissedMoment()) {
-          console.log(notification.getDismissedReason());
-        } else {
-          
-        }
-      });
-    }
-    </script>
-    <title>One tap Login App</title>
-  </head>
-  <body>
-    
-    <div id="root"></div>
-    
-  </body>
+    <head>
+        <meta name="google-signin-client_id" content="141290470186-e63pmerr4gft8cep5gptbbjlo3gcqn5u.apps.googleusercontent.com">
+        <script src="https://accounts.google.com/gsi/client" async defer ></script>
+    </head>
+    <body>
+
+        <div id="g_id_onload" 
+          data-client_id="141290470186-e63pmerr4gft8cep5gptbbjlo3gcqn5u.apps.googleusercontent.com"
+          data-context="signin"
+          data-ux_mode="popup"
+          data-callback="handleCredentialResponse"
+          data-auto_prompt="false">    
+        </div>
+
+        <div class="g_id_signin"
+        data-type="standard"
+        data-shape="rectangular"
+        data-theme="outline"
+        data-text="signin_with"
+        data-size="large"
+        data-logo_alignment="left">
+        </div>
+
+        <script>
+            function handleCredentialResponse(response){
+                const responsePayload=decodeJwtResponse(response.credential);
+                console.log(responsePayload.sub);
+                console.log(responsePayload.name);
+                console.log(responsePayload.given_name);
+                console.log(responsePayload.family_name);
+                console.log(responsePayload.picture);
+                console.log(responsePayload.email);
+            }
+
+            function decodeJwtResponse(data){
+                var tokens = data.split(".");
+                return JSON.parse(atab(tokens[1]));
+            }
+        </script>
+    </body>
 </html>
