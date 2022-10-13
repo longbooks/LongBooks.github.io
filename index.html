@@ -19,6 +19,7 @@
       }
       function getToken() {
         client.requestAccessToken();
+        console.log(client.requestAccessToken());
       }
       function revokeToken() {
         google.accounts.oauth2.revoke(access_token, () => {console.log('access token revoked')});
