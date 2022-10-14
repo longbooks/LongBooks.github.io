@@ -32,7 +32,7 @@ function loadCalendar() {
       console.log(xhr.response);
       const channel=xhr.response.items[0];
       const output=`
-      <img src="${channel.snippet.thumbnails.high}"/>
+      <img src="${channel.snippet.thumbnails.high.url}" height="${channel.snippet.thumbnails.high.height}" width="${channel.snippet.thumbnails.high.width}">
       <ul class='collection'>
         <li class='collection-item'>Id:${channel.id}</li>
         <li class='collection-item'>Title:${channel.snippet.title}</li>
