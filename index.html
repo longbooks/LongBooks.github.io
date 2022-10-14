@@ -11,16 +11,19 @@
                     client_id: '141290470186-e63pmerr4gft8cep5gptbbjlo3gcqn5u.apps.googleusercontent.com',
                     scope: 'https://www.googleapis.com/auth/youtube.readonly',
                     ux_mode:'popup',
-                    callback: (response) => {
+                    callback: () => {
                         const xhr=new XMLHttpRequest();
-                        xhr.open('POST', 'https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest',true);
-                        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                        xhr.setRequestHeader('X-Requested-With', 'XmlHttpRequest');
-                        xhr.onload=function(){
-                            console.log('Auth code response : ' + xhr.responseText);
+                        xhr.open('GET', 'https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest',true);
+                        xhr.responseType="json";
+                        xhr.onload=()=>{
+                            if(xhr.status===200){
+                                console.log(xhr.response);
+                            }else{
+                                console.log("Error");
+                            }
                         };
-                        xhr.send('code=' + code);
-                    },
+                        xhr.send();
+                    }
                 });
             }
 
