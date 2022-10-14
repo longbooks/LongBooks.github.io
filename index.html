@@ -1,41 +1,47 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <script src="https://accounts.google.com/gsi/client" onload="initClient()" async defer></script>
-  </head>
-  <body>
-    <script>
-      var client;
-      var access_token;
+    <head>
+        <script src="https://accounts.google.com/gsi/client" async defer></script>
+    </head>
+    <body>
+        <script>
+            function authenticate() {
+                return google.accounts.oauth2.initTokenClient({
+                    client_id: '141290470186-e63pmerr4gft8cep5gptbbjlo3gcqn5u.apps.googleusercontent.com',
+                    scope: 'https://www.googleapis.com/auth/youtube.readonly',
+                })
+                .then(function() { 
+                    console.log("Sign-in successful");
+                },
+                function(err) { 
+                    console.error("Error signing in", err); 
+                });
+            }
 
-      function initClient() {
-        client = google.accounts.oauth2.initTokenClient({
-          client_id: '141290470186-e63pmerr4gft8cep5gptbbjlo3gcqn5u.apps.googleusercontent.com',
-          scope: 'https://www.googleapis.com/auth/youtube.readonly',
-          callback: (tokenResponse) => {
-            access_token = tokenResponse.access_token;
-          },
-        });
-      }
-      function getToken() {
-        client.requestAccessToken()
-        .then(function() { console.log("Sign-in successful"); },
-              function(err) { console.error("Error signing in", err); });
-      }
-      function revokeToken() {
-        google.accounts.oauth2.revoke(access_token, () => {console.log('access token revoked')});
-      }
-      function loadCalendar() {
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest');
-        xhr.setRequestHeader('Authorization', 'Bearer ' + access_token);
-        xhr.send();
-        console.log(access_token);
-      }
-    </script>
-    <h1>Google Identity Services Authorization Token model</h1>
-    <button onclick="getToken();">Get access token</button><br><br>
-    <button onclick="loadCalendar();">Load Calendar</button><br><br>
-    <button onclick="revokeToken();">Revoke token</button>
-  </body>
+            function loadClient() {
+                gapi.client.setApiKey("YOUR_API_KEY");
+                return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
+                .then(function() { console.log("GAPI client loaded for API"); },
+                function(err) { console.error("Error loading GAPI client for API", err); });
+            }
+
+            function execute() {
+                return gapi.client.youtube.channels.list({
+                    "part":[
+                        "snippet,contentDetails,statistics"
+                    ],
+                    "mine": true
+                })
+                .then(function(response) {
+                    // Handle the results here (response.result has the parsed body).
+                    console.log("Response", response);
+                },
+                function(err) { 
+                    console.error("Execute error", err);
+                 });
+            }
+        </script>
+        <button onclick="authenticate().then(loadClient)">authorize and load</button>
+        <button onclick="execute()">execute</button>
+    </body>
 </html>
