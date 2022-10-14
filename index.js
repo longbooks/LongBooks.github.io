@@ -32,7 +32,7 @@ function loadCalendar() {
       console.log(xhr.response);
       const channel=xhr.response.items[0];
       const output=`
-      <img src="${channel.snippet.thumbnails.high.url}" height="${channel.snippet.thumbnails.high.height}" width="${channel.snippet.thumbnails.high.width}">
+      <img src="${channel.snippet.thumbnails.medium.url}" height="${channel.snippet.thumbnails.medium.height}" width="${channel.snippet.thumbnails.medium.width}">
       <ul class='collection'>
         <li class='collection-item'>Id:${channel.id}</li>
         <li class='collection-item'>Title:${channel.snippet.title}</li>
@@ -41,7 +41,7 @@ function loadCalendar() {
         <li class='collection-item'>Video:${channel.statistics.videoCount}</li>
       </ul>
       <hr>
-      <a class='btn' target="_blank" href="https://youtube.com/${channel.id}">Visit Channel</a>
+      <a class='btn' target="_blank" href="https://youtube.com/channel/${channel.id}">Visit Channel</a>
       `;
       showChanneldata(output);
     }else{
