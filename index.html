@@ -7,7 +7,6 @@
     <script>
       var client;
       var access_token;
-      const content=document.getElementById('content');
 
       function initClient() {
         client = google.accounts.oauth2.initTokenClient({
@@ -37,17 +36,17 @@
         xhr.onload=()=>{
           if(xhr.status===200){
             console.log(xhr.response);
-            const channel=xhr.response.items[0];
+            const channel=xhr.response.result.items[0];
             const output=`
             <ul class='collection'>
-              <li class='collection-item'Id>:${channel.id}</li>
+              <li class='collection-item'>Id:${channel.id}</li>
               <li class='collection-item'>Title:${channel.snippet.title}</li>
               <li class='collection-item'>Subscribers:${channel.statistics.subscriberCount}</li>
               <li class='collection-item'>Views:${channel.statistics.viewCount}</li>
-              <li class='collection-item'>Views:${channel.statistics.videoCount}</li>
+              <li class='collection-item'>Video:${channel.statistics.videoCount}</li>
             </ul>
             <hr>
-            <a class='btn' target="_blank" href="https://youtube.com/${channel.snippet.customUrl}">Visit Channel</a>
+            <a class='btn' target="_blank" href="https://youtube.com/${channel.id}">Visit Channel</a>
             `;
             showChanneldata(output);
           }else{
