@@ -1,29 +1,27 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script src="https://accounts.google.com/gsi/client" async defer></script>
+        <script src="https://accounts.google.com/gsi/client" onload="initClient()" async defer></script>
     </head>
     <body>
         <script>
-            function authenticate() {
-                var output=google.accounts.oauth2.initTokenClient({
+            var client;
+            function initClient() {
+                client = google.accounts.oauth2.initCodeClient({
                     client_id: '141290470186-e63pmerr4gft8cep5gptbbjlo3gcqn5u.apps.googleusercontent.com',
                     scope: 'https://www.googleapis.com/auth/youtube.readonly',
+                    ux_mode:'popup',
+                    callback: (response) => {
+                        const xhr=new XMLHttpRequest();
+                        xhr.open('POST', 'https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest',true);
+                        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                        xhr.setRequestHeader('X-Requested-With', 'XmlHttpRequest');
+                        xhr.onload=function(){
+                            console.log('Auth code response : ' + xhr.responseText);
+                        };
+                        xhr.send('code=' + code);
+                    },
                 });
-                console.log(output);
-                output.execute(function(){ 
-                    console.log("Sign-in successful");
-                },
-                function(err){ 
-                    console.error("Error signing in", err);
-                });
-            }
-
-            function loadClient() {
-                gapi.client.setApiKey("AIzaSyBTJnaY-IbClJu84zEEv1lGYQlXHvQeLu0");
-                return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
-                .then(function() { console.log("GAPI client loaded for API"); },
-                function(err) { console.error("Error loading GAPI client for API", err); });
             }
 
             function execute() {
@@ -42,7 +40,7 @@
                  });
             }
         </script>
-        <button onclick="authenticate().then(loadClient)">authorize and load</button>
+        <button onclick="client.requestCode();">authorize and load</button>
         <button onclick="execute()">execute</button>
     </body>
 </html>
