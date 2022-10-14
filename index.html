@@ -13,7 +13,7 @@
                     ux_mode:'popup',
                     callback: () => {
                         const xhr=new XMLHttpRequest();
-                        xhr.open('GET', 'https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest',true);
+                        xhr.open('GET', 'https://youtube.googleapis.com/youtube/v3/channels?part=snippet&mine=true&key=AIzaSyBTJnaY-IbClJu84zEEv1lGYQlXHvQeLu0',true);
                         xhr.responseType="json";
                         xhr.onload=()=>{
                             if(xhr.status===200){
