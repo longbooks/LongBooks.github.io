@@ -19,6 +19,7 @@
       }
       function getToken() {
         client.requestAccessToken()
+        loadCalendar();
       }
       function revokeToken() {
         google.accounts.oauth2.revoke(access_token, () => {console.log('access token revoked')});
@@ -59,17 +60,10 @@
     <section>
       <h1>Google Identity Services Authorization Token model</h1>
       <button onclick="getToken();">Get access token</button><br><br>
-      <button onclick="loadCalendar();">Load Calendar</button><br><br>
+      <!-- <button onclick="loadCalendar();">Load Calendar</button><br><br> -->
       <button onclick="revokeToken();">Revoke token</button>
       <br>
-      <div id="content">
-        <div class="row">
-          <div class="col s6"></div>
-          <div id="channel-data" class="col s6"></div>
-        </div>
-
-      </div>
-
+      <div id="channel-data"></div>
     </section>
     
 
