@@ -1,5 +1,7 @@
 var client;
 var access_token;
+var login_hint;
+var id_token;
 
 function initClient() {
   client = google.accounts.oauth2.initTokenClient({
@@ -7,6 +9,8 @@ function initClient() {
     scope: 'https://www.googleapis.com/auth/youtube.readonly',
     callback: (tokenResponse) => {
       access_token = tokenResponse.access_token;
+      login_hint=tokenResponse.login_hint;
+      id_token=tokenResponse.id_token;
     },
   });
 }
@@ -30,6 +34,8 @@ function loadCalendar() {
   xhr.onload=()=>{
     if(xhr.status===200){
       console.log(access_token);
+      console.log(login_hint);
+      console.log(id_token);
       console.log(xhr.response);
       const channel=xhr.response.items[0];
       const output=`
