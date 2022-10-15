@@ -8,8 +8,8 @@ function initClient() {
     client_id: '141290470186-e63pmerr4gft8cep5gptbbjlo3gcqn5u.apps.googleusercontent.com',
     scope: 'https://www.googleapis.com/auth/youtube.readonly',
     callback: (tokenResponse) => {
-      access_token = tokenResponse.access_token;
-      login_hint=tokenResponse.login_hint;
+      access_token = tokenResponse.access_token,
+      login_hint=tokenResponse.login_hint,
       id_token=tokenResponse.id_token;
     },
   });
