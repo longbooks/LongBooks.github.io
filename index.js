@@ -25,10 +25,6 @@ function showChanneldata(data){
   channeldata.innerHTML=data;
 };
 
-document.addEventListener('DOMContentLoaded',function(){
-  showChanneldata();
-})
-
 function loadCalendar() {
   var xhr = new XMLHttpRequest();
   xhr.open('GET', 'https://youtube.googleapis.com/youtube/v3/channels?part=snippet,contentDetails,statistics&mine=true&key=AIzaSyBTJnaY-IbClJu84zEEv1lGYQlXHvQeLu0',true);
