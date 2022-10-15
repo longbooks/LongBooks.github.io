@@ -49,7 +49,7 @@ function loadCalendar(){
         'Authorization' : 'Bearer ' + access_token
     }
 }).then(responce => responce.json())
-  .then(json => channeldata(json))
+  .then(json => console.log(json))
   .catch(error => console.log(error))
 }
 // function loadCalendar() {
