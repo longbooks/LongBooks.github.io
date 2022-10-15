@@ -25,32 +25,13 @@ function showChanneldata(data){
   channeldata.innerHTML=data;
 };
 
-function loadCalendar() {
-  var xhr = new XMLHttpRequest();
-  xhr.open('GET', 'https://youtube.googleapis.com/youtube/v3/channels?part=snippet,contentDetails,statistics&mine=true&key=AIzaSyBTJnaY-IbClJu84zEEv1lGYQlXHvQeLu0',true);
-  xhr.responseType="json";
-  xhr.setRequestHeader('Authorization', 'Bearer ' + access_token);
-  xhr.onload=()=>{
-    if(xhr.status===200){
-      console.log(access_token);
-      console.log(xhr.response);
-      const channel=xhr.response.items[0];
-      const output=`
-      <img src="${channel.snippet.thumbnails.medium.url}" height="${channel.snippet.thumbnails.medium.height}" width="${channel.snippet.thumbnails.medium.width}">
-      <ul class='collection'>
-        <li class='collection-item'>Id:${channel.id}</li>
-        <li class='collection-item'>Title:${channel.snippet.title}</li>
-        <li class='collection-item'>Subscribers:${channel.statistics.subscriberCount}</li>
-        <li class='collection-item'>Views:${channel.statistics.viewCount}</li>
-        <li class='collection-item'>Video:${channel.statistics.videoCount}</li>
-      </ul>
-      <hr>
-      <a class='btn' target="_blank" href="https://youtube.com/channel/${channel.id}">Visit Channel</a>
-      `;
-      showChanneldata(output);
-    }else{
-      console.log("Error");
+function loadCalendar(){
+  fetch('https://youtube.googleapis.com/youtube/v3/channels?part=snippet,contentDetails,statistics&mine=true&key=AIzaSyBTJnaY-IbClJu84zEEv1lGYQlXHvQeLu0',{
+    method:'get',
+    headers:{
+        'Authorization' : 'Bearer ' + access_token
     }
-  };
-  xhr.send();
+}).then(responce => responce.json())
+  .then(json => console.log(json))
+  .catch(error => console.log(error))
 }
