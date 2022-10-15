@@ -25,6 +25,23 @@ function showChanneldata(data){
   channeldata.innerHTML=data;
 };
 
+function channeldata(xhr){
+  const channel=xhr.response.items[0];
+  const output=`
+  <img src="${channel.snippet.thumbnails.medium.url}" height="${channel.snippet.thumbnails.medium.height}" width="${channel.snippet.thumbnails.medium.width}">
+  <ul class='collection'>
+    <li class='collection-item'>Id:${channel.id}</li>
+    <li class='collection-item'>Title:${channel.snippet.title}</li>
+    <li class='collection-item'>Subscribers:${channel.statistics.subscriberCount}</li>
+    <li class='collection-item'>Views:${channel.statistics.viewCount}</li>
+    <li class='collection-item'>Video:${channel.statistics.videoCount}</li>
+  </ul>
+  <hr>
+  <a class='btn' target="_blank" href="https://youtube.com/channel/${channel.id}">Visit Channel</a>
+  `;
+  showChanneldata(output);
+}
+
 function loadCalendar(){
   fetch('https://youtube.googleapis.com/youtube/v3/channels?part=snippet,contentDetails,statistics&mine=true&key=AIzaSyBTJnaY-IbClJu84zEEv1lGYQlXHvQeLu0',{
     method:'get',
@@ -32,6 +49,6 @@ function loadCalendar(){
         'Authorization' : 'Bearer ' + access_token
     }
 }).then(responce => responce.json())
-  .then(json => console.log(json))
+  .then(json => channeldata(json))
   .catch(error => console.log(error))
 }
