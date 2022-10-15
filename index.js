@@ -20,15 +20,13 @@ function revokeToken() {
   google.accounts.oauth2.revoke(access_token, () => {console.log('access token revoked')});
 }
 
-function showChanneldata(data){
+document.addEventListener('DOMContentLoaded',function(){
+ function showChanneldata(data){
   const channeldata=document.getElementById('channel-data');
   setInterval(function(){
     channeldata.innerHTML=data;
   },2000);
 }
-
-document.addEventListener('DOMContentLoaded',function(){
-  showChanneldata();
 })
 
 function loadCalendar() {
