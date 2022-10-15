@@ -6,7 +6,14 @@ function initClient() {
     client_id: '141290470186-e63pmerr4gft8cep5gptbbjlo3gcqn5u.apps.googleusercontent.com',
     scope: 'https://www.googleapis.com/auth/youtube.readonly',
     callback: (tokenResponse) => {
-      access_token = tokenResponse.access_token;
+      if(tokenResponse && tokenResponse.access_token){
+        if(google.accounts.oauth2.hasGrantedAnyScope(tokenResponse,
+          'https://www.googleapis.com/auth/youtube.readonly')){
+            access_token = tokenResponse.access_token;
+        }else{
+          alert("alredy connected");
+        }
+      }
     },
   });
 }
