@@ -26,7 +26,7 @@ function showChanneldata(data){
 };
 
 function channeldata(xhr){
-  const channel=xhr.response.items[0];
+  const channel=xhr.result.items[0];
   const output=`
   <img src="${channel.snippet.thumbnails.medium.url}" height="${channel.snippet.thumbnails.medium.height}" width="${channel.snippet.thumbnails.medium.width}">
   <ul class='collection'>
@@ -48,7 +48,8 @@ function loadCalendar(){
     headers:{
         'Authorization' : 'Bearer ' + access_token
     }
-}).then(responce => responce.json())
-  .then(json => channeldata(json))
-  .catch(error => console.log(error))
+}).then(response => {
+  console.log(response);
+  channeldata(response);
+})
 }
