@@ -6,14 +6,7 @@ function initClient() {
     client_id: '141290470186-e63pmerr4gft8cep5gptbbjlo3gcqn5u.apps.googleusercontent.com',
     scope: 'https://www.googleapis.com/auth/youtube.readonly',
     callback: (tokenResponse) => {
-      if(tokenResponse && tokenResponse.access_token){
-        if(google.accounts.oauth2.hasGrantedAnyScope(tokenResponse,
-          'https://www.googleapis.com/auth/youtube.readonly')){
-            access_token = tokenResponse.access_token;
-        }else{
-          alert("alredy connected");
-        }
-      }
+      access_token = tokenResponse.access_token;
     },
   });
 }
@@ -36,6 +29,7 @@ function loadCalendar() {
   xhr.setRequestHeader('Authorization', 'Bearer ' + access_token);
   xhr.onload=()=>{
     if(xhr.status===200){
+      console.log(access_token);
       console.log(xhr.response);
       const channel=xhr.response.items[0];
       const output=`
