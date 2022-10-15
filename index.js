@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded',function(){
   const channeldata=document.getElementById('channel-data');
   setInterval(function(){
     channeldata.innerHTML=data;
-  },2000);
+  });
 }
 })
 
