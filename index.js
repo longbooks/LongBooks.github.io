@@ -49,7 +49,8 @@ function loadCalendar(){
         'Authorization' : 'Bearer ' + access_token
     }
 }).then(responce => responce.json())
-  .then(json => console.log(json))
+  .then(json => console.log(json),
+  console.log(json.result.items[0]))
   .catch(error => console.log(error))
 }
 // function loadCalendar() {
