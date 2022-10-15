@@ -22,9 +22,7 @@ function revokeToken() {
 
 function showChanneldata(data){
   const channeldata=document.getElementById('channel-data');
-  setInterval(function(){
-    channeldata.innerHTML=data;
-  });
+  channeldata.innerHTML=data;
 };
 
 document.addEventListener('DOMContentLoaded',function(){
@@ -38,6 +36,7 @@ function loadCalendar() {
   xhr.setRequestHeader('Authorization', 'Bearer ' + access_token);
   xhr.onload=()=>{
     if(xhr.status===200){
+      console.log(access_token);
       console.log(xhr.response);
       const channel=xhr.response.items[0];
       const output=`
