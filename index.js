@@ -49,8 +49,8 @@ function loadCalendar(){
         'Authorization' : 'Bearer ' + access_token
     }
 }).then(response => {
-  console.log(response);
-  channeldata(response);
+  console.log(response.json);
+  channeldata(response.json);
 })
 }
 // function loadCalendar() {
