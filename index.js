@@ -13,8 +13,13 @@ function initClient() {
 }
 
 function getToken() {
-  client.requestAccessToken()
+  if(client.requestAccessToken()){
+    console.log("Successfully Done");
+  }else{
+    console.log("Problem");
+  }
 }
+
 function revokeToken() {
   google.accounts.oauth2.revoke(access_token, () => {console.log('access token revoked')});
 }
