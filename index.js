@@ -58,9 +58,7 @@ function loadCalendar(){
   });
 }
 
-document.addEventListener('DOMContentLoaded',function(){
-  loadCalendar();
-});
+
 
 
 
