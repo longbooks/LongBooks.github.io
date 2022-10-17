@@ -58,7 +58,7 @@ function loadCalendar(){
   });
 }
 
-refresh.addEventListener('DOMCotentLoaded',function(){
+document.addEventListener('DOMCotentLoaded',function(){
   loadCalendar();
 });
 
