@@ -14,12 +14,7 @@ function initClient() {
 }
 
 function getToken() {
-  client.requestAccessToken();
-
-  setInterval(function(){
-    loadCalendar();
-  },10000);
-  
+  client.requestAccessToken()
 }
 
 function disconnect() {
