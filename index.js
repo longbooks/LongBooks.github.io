@@ -14,7 +14,7 @@ function initClient() {
 }
 
 function getToken() {
-  client.requestAccessToken()
+  client.requestAccessToken();
 
   setInterval(function(){
     loadCalendar();
